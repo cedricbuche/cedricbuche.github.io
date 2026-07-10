@@ -1,75 +1,3 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Publications — Cédric Buche</title>
-<link rel="stylesheet" href="assets/style.css">
-</head>
-
-<body>
-
-<div class="topbar">
-  <span class="nav-name">Cédric Buche</span>
-  <button class="nav-toggle" aria-expanded="false">
-    Menu ☰
-  </button>
-</div>
-
-
-<div class="shell">
-
-  <nav id="sidebar"></nav>
-
-
-  <main>
-    <div class="wrap">
-
-      <p class="eyebrow">Publications</p>
-      <h1>Bibliography</h1>
-
-      <p>
-        Links:
-        <a href="http://hal.archives-ouvertes.fr/Public/afficheRequetePubli.php">
-          HAL
-        </a>
-        ·
-        <a href="http://scholar.google.com/citations?hl=en&user=yNTv2kwAAAAJ&view_op=list_works&sortby=pubdate">
-          Google Scholar
-        </a>
-
-        <br><br>
-
-        Journal/conference ranks from 
-        <a href="http://portal.core.edu.au/jnl-ranks/">CORE journals</a> /
-        <a href="http://portal.core.edu.au/conf-ranks/">CORE conferences</a>,
-        quartiles from <a href="https://www.scimagojr.com/">SJR</a>
-
-        <br><br>
-      </p>
-
-
-      <div class="pub-filters">
-        <button class="active" data-cat="all">All</button>
-        <button data-cat="year">By year</button>
-        <button data-cat="journals">International journals</button>
-        <button data-cat="conferences">International conferences</button>
-        <button data-cat="preprints">Preprints</button>
-        <button data-cat="national">National journals</button>
-      </div>
-
-
-      <div id="pub-root">Loading…</div>
-
-
-    </div>
-  </main>
-
-
-</div>
-
-
-
 <script src="assets/publications-data.js"></script>
 
 <script>
@@ -120,7 +48,6 @@ function renderPub(p){
 
 
   return ''
-
     + '<div class="pub">'
 
       + '<div class="yr">'+p.y+'</div>'
@@ -149,7 +76,6 @@ function renderPub(p){
 
 function render(mode){
 
-
   var root = document.getElementById('pub-root');
 
   var html = '';
@@ -157,45 +83,19 @@ function render(mode){
 
 
   /*
-    Global chronological view
-    All publication types mixed
+    All publications sorted by year
   */
 
   if(mode === 'year'){
 
 
+    var items = PUBLICATIONS
+      .slice()
+      .sort(function(a,b){
 
-    var items = [];
+        return Number(b.y)-Number(a.y);
 
-
-
-    CATS.forEach(function(c){
-
-
-      PUBLICATIONS
-
-        .filter(function(p){
-
-          return p.cat === c.key;
-
-        })
-
-        .forEach(function(p){
-
-          items.push(p);
-
-        });
-
-
-    });
-
-
-
-    items.sort(function(a,b){
-
-      return Number(b.y) - Number(a.y);
-
-    });
+      });
 
 
 
@@ -204,7 +104,6 @@ function render(mode){
 
 
     items.forEach(function(p){
-
 
 
       var year = String(p.y);
@@ -253,14 +152,6 @@ function render(mode){
 
 
 
-    if(html === ''){
-
-      html = '<p>No publications found.</p>';
-
-    }
-
-
-
   }
 
 
@@ -268,7 +159,7 @@ function render(mode){
 
 
   /*
-    Category view
+    Category display
   */
 
   else {
@@ -409,9 +300,3 @@ render('all');
 })();
 
 </script>
-
-
-<script src="assets/main.js"></script>
-
-</body>
-</html>
