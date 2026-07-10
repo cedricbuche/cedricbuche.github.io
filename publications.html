@@ -1,55 +1,170 @@
-<!doctype html> <html lang="en"> <head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1"> <title>Publications — Cédric Buche</title> <link rel="stylesheet" href="assets/style.css"> </head> <body> <div class="topbar"> <span class="nav-name">Cédric Buche</span> <button class="nav-toggle" aria-expanded="false"> Menu ☰ </button> </div> <div class="shell"> <nav id="sidebar"></nav> <main> <div class="wrap"> <p class="eyebrow">Publications</p> <h1>Bibliography</h1> <p> Links: <a href="http://hal.archives-ouvertes.fr/Public/afficheRequetePubli.php?auteur_exp=C%C3%A9dric,%20Buche&annee_publideb=2002&annee_publifin=2030&typdoc=%28%27REPORT%27,%27ART_ACL%27,%27ART_SCL%27,%27CONF_INV%27,%27COMM_ACT%27,%27COMM_SACT%27,%27OUVS%27,%27COVS%27,%27DOUV%27,%27PATENT%27,%27OTHER%27,%27THESE%27,%27HDR%27,%27COURS%27,%27UNDEFINED%27,%27autre%27%29&CB_auteur=oui&CB_titre=oui&CB_article=oui&langue=Anglais&tri_exp=typdoc&tri_exp2=typdoc&tri_exp3=date_publi&ordre_aff=TA&Fen=Aff&css=../css/VisuRubriqueEncadre.css"> HAL </a> · <a href="http://scholar.google.com/citations?hl=en&user=yNTv2kwAAAAJ&view_op=list_works&sortby=pubdate"> Google Scholar </a> <br><br> Journal/conference ranks from <a href="http://portal.core.edu.au/jnl-ranks/">CORE journals</a> / <a href="http://portal.core.edu.au/conf-ranks/">CORE conferences</a>, quartiles from <a href="https://www.scimagojr.com/">SJR</a> <br><br> </p> <div class="pub-filters"> <button class="active" data-cat="all">All</button> <button data-cat="year">By year</button> <button data-cat="journals">International journals</button> <button data-cat="conferences">International conferences</button> <button data-cat="preprints">Preprints</button> <button data-cat="national">National journals</button> </div> <div id="pub-root">Loading…</div> </div> </main> </div> <script src="assets/publications-data.js"></script> <script> (function(){ var CATS = [ {key:'journals', label:'International journals'}, {key:'conferences', label:'International conferences'}, {key:'preprints', label:'Preprints'}, {key:'national', label:'Articles in national journals'} ]; function esc(s){ return String(s).replace(/[&<>]/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;' }[c]; }); } function renderPub(p){ var badges = (p.b||[]) .map(function(b){ return '<span class="badge">'+esc(b)+'</span>'; }) .join(''); var link = p.l ? '<div class="lnk"><a href="'+esc(p.l)+'">source / DOI ↗</a></div>' : ''; return '' + '<div class="pub">' + '<div class="yr">'+p.y+'</div>' + '<div>' + '<div class="ti">'+esc(p.t)+'</div>' + '<div class="au">'+esc(p.a)+'</div>' + '<div class="ve">'+esc(p.v)+'</div>' + (badges ? '<div class="badges">'+badges+'</div>' : '') + link + '</div>' + '</div>'; } function render(mode){ var root = document.getElementById('pub-root'); var html = '';  /*
-    Display all publications by year
-    regardless of publication type
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Publications — Cédric Buche</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+
+<div class="topbar">
+  <span class="nav-name">Cédric Buche</span>
+  <button class="nav-toggle" aria-expanded="false">
+    Menu ☰
+  </button>
+</div>
+
+<div class="shell">
+
+  <nav id="sidebar"></nav>
+
+  <main>
+    <div class="wrap">
+
+      <p class="eyebrow">Publications</p>
+      <h1>Bibliography</h1>
+
+      <p>
+        Links:
+        <a href="http://hal.archives-ouvertes.fr/Public/afficheRequetePubli.php">
+          HAL
+        </a>
+        ·
+        <a href="http://scholar.google.com/citations?hl=en&user=yNTv2kwAAAAJ&view_op=list_works&sortby=pubdate">
+          Google Scholar
+        </a>
+
+        <br><br>
+
+        Journal/conference ranks from
+        <a href="http://portal.core.edu.au/jnl-ranks/">CORE journals</a> /
+        <a href="http://portal.core.edu.au/conf-ranks/">CORE conferences</a>,
+        quartiles from
+        <a href="https://www.scimagojr.com/">SJR</a>
+
+        <br><br>
+      </p>
+
+      <div class="pub-filters">
+        <button class="active" data-cat="all">All</button>
+        <button data-cat="year">By year</button>
+        <button data-cat="journals">International journals</button>
+        <button data-cat="conferences">International conferences</button>
+        <button data-cat="preprints">Preprints</button>
+        <button data-cat="national">National journals</button>
+      </div>
+
+      <div id="pub-root">Loading…</div>
+
+    </div>
+  </main>
+
+</div>
+
+<script src="assets/publications-data.js"></script>
+
+<script>
+
+(function(){
+
+var CATS = [
+  {key:'journals', label:'International journals'},
+  {key:'conferences', label:'International conferences'},
+  {key:'preprints', label:'Preprints'},
+  {key:'national', label:'Articles in national journals'}
+];
+
+
+function esc(s){
+  return String(s).replace(/[&<>]/g,function(c){
+    return {
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;'
+    }[c];
+  });
+}
+
+
+function renderPub(p){
+
+  var badges = (p.b || [])
+    .map(function(b){
+      return '<span class="badge">'+esc(b)+'</span>';
+    })
+    .join('');
+
+  var link = p.l
+    ? '<div class="lnk"><a href="'+esc(p.l)+'">source / DOI ↗</a></div>'
+    : '';
+
+  return ''
+    + '<div class="pub">'
+      + '<div class="yr">'+p.y+'</div>'
+      + '<div>'
+        + '<div class="ti">'+esc(p.t)+'</div>'
+        + '<div class="au">'+esc(p.a)+'</div>'
+        + '<div class="ve">'+esc(p.v)+'</div>'
+        + (badges
+            ? '<div class="badges">'+badges+'</div>'
+            : '')
+        + link
+      + '</div>'
+    + '</div>';
+}
+
+
+function render(mode){
+
+  var root = document.getElementById('pub-root');
+  var html = '';
+
+  /*
+    All publications grouped by year
   */
   if(mode === 'year'){
-
 
     var items = PUBLICATIONS
       .slice()
       .sort(function(a,b){
-        return Number(b.y) - Number(a.y);
-      });
 
+        if(b.y !== a.y){
+          return b.y - a.y;
+        }
+
+        return (a.t || '').localeCompare(b.t || '');
+      });
 
     var currentYear = null;
 
-
     items.forEach(function(p){
 
-
-      var year = String(p.y);
-
-
-      if(year !== currentYear){
-
+      if(p.y !== currentYear){
 
         if(currentYear !== null){
           html += '</section>';
         }
 
-
-        currentYear = year;
-
+        currentYear = p.y;
 
         html += '<section class="pub-section">';
         html += '<div class="pub-section-title">'
-             + year
+             + currentYear
              + '</div>';
-
       }
-
 
       html += renderPub(p);
 
-
     });
-
 
     if(currentYear !== null){
       html += '</section>';
     }
-
-
   }
+
+  /*
+    Category display
+  */
  /* Display by categories */ else { CATS.forEach(function(c){ if(mode !== 'all' && mode !== c.key){ return; } var items = PUBLICATIONS .filter(function(p){ return p.cat === c.key; }) .sort(function(a,b){ return b.y - a.y; }); if(!items.length){ return; } html += '<section class="pub-section" data-cat="'+c.key+'">'; html += '<div class="pub-section-title">'+ c.label+ ' <span style="color:var(--ink-soft); font-weight:400;">('+ items.length+ ')</span></div>'; items.forEach(function(p){ html += renderPub(p); }); html += '</section>'; }); } root.innerHTML = html; } /* Filter buttons */ document.querySelectorAll('.pub-filters button') .forEach(function(btn){ btn.addEventListener('click', function(){ document.querySelectorAll('.pub-filters button') .forEach(function(b){ b.classList.remove('active'); }); btn.classList.add('active'); render(btn.dataset.cat); }); }); render('all'); })(); </script> <script src="assets/main.js"></script> </body> </html>
