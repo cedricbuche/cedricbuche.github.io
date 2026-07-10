@@ -41,6 +41,7 @@
  
       <div class="pub-filters">
         <button class="active" data-cat="year">By year</button>
+        <button data-cat="top">Top (rank A / Q1)</button>
         <button data-cat="journals">International journals</button>
         <button data-cat="conferences">International conferences</button>
         <button data-cat="preprints">Preprints</button>
@@ -72,6 +73,12 @@
     });
   }
  
+  function isTop(p) {
+    return (p.b || []).some(function (b) {
+      return b === 'Q1' || b === 'rank A' || b === 'rank A*';
+    });
+  }
+ 
   function renderPub(p) {
     var badges = (p.b || []).map(function (b) {
       return '<span class="badge">' + esc(b) + '</span>';
@@ -98,19 +105,25 @@
     var root = document.getElementById('pub-root');
     var html = '';
  
-    if (mode === 'year') {
-      // All publications, grouped by year, newest first
-      var items = PUBLICATIONS.slice().sort(function (a, b) {
-        if (b.y !== a.y) return b.y - a.y;
-        return (a.t || '').localeCompare(b.t || '');
-      });
+    if (mode === 'year' || mode === 'top') {
+      // All publications (or only rank A / A* / Q1 ones), grouped by year, newest first
+      var items = PUBLICATIONS
+        .filter(function (p) { return mode === 'year' || isTop(p); })
+        .sort(function (a, b) {
+          if (b.y !== a.y) return b.y - a.y;
+          return (a.t || '').localeCompare(b.t || '');
+        });
+ 
+      if (mode === 'top' && !items.length) {
+        html = '<p style="color:var(--ink-soft);">No rank A / Q1 entries found.</p>';
+      }
  
       var currentYear = null;
       items.forEach(function (p) {
         if (p.y !== currentYear) {
           if (currentYear !== null) html += '</section>';
           currentYear = p.y;
-          html += '<section class="pub-section" data-cat="year">';
+          html += '<section class="pub-section" data-cat="' + mode + '">';
           html += '<div class="pub-section-title">' + currentYear + '</div>';
         }
         html += renderPub(p);
@@ -151,7 +164,7 @@
     });
   });
  
-  render('year');
+  render('year'); // matches the button marked class="active" above
 })();
 </script>
 <script src="assets/main.js"></script>
