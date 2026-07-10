@@ -193,8 +193,10 @@ td .yr{ font-family:var(--mono); color:var(--teal-deep); white-space:nowrap; }
 /* contact */
 .contact-card{ display:flex; gap:1.6rem; align-items:center; flex-wrap:wrap; }
 .contact-photo{
-  width:120px; height:120px; border-radius:50%; object-fit:cover; border:1px solid var(--line);
-  background:var(--paper-2);
+  width:150px;
+  height:150px;
+  border-radius:12px;
+  object-fit:cover;
 }
 .btn{
   display:inline-flex; align-items:center; gap:.4rem; font-family:var(--mono); font-size:.8rem;
