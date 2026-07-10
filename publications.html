@@ -144,56 +144,56 @@
 
 
 
-    /*
-      Display all publications by year
-      regardless of publication type
-    */
-    if(mode === 'year'){
+if(mode === 'year'){
+
+  var items = PUBLICATIONS
+    .filter(function(p){
+      return p.y !== undefined && p.y !== null;
+    })
+    .sort(function(a,b){
+      return Number(b.y) - Number(a.y);
+    });
 
 
-      var items = PUBLICATIONS
-        .slice()
-        .sort(function(a,b){
-          return b.y - a.y;
-        });
+  var currentYear = null;
 
 
-      var currentYear = null;
+  items.forEach(function(p){
+
+    var year = String(p.y);
 
 
-      items.forEach(function(p){
-
-
-        if(p.y !== currentYear){
-
-
-          if(currentYear !== null){
-            html += '</section>';
-          }
-
-
-          currentYear = p.y;
-
-
-          html += '<section class="pub-section">';
-          html += '<div class="pub-section-title">'+currentYear+'</div>';
-
-        }
-
-
-        html += renderPub(p);
-
-
-      });
-
+    if(year !== currentYear){
 
       if(currentYear !== null){
         html += '</section>';
       }
 
 
+      currentYear = year;
+
+
+      html += '<section class="pub-section">';
+      html += '<div class="pub-section-title">'+year+'</div>';
+
     }
 
+
+    html += renderPub(p);
+
+  });
+
+
+  if(currentYear !== null){
+    html += '</section>';
+  }
+
+
+  if(html === ''){
+    html = '<p>No publications found.</p>';
+  }
+
+}
 
     /*
       Display by categories
