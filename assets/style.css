@@ -207,14 +207,14 @@ footer.page-foot{ margin-top:3rem; padding-top:1.4rem; border-top:1px solid var(
 
 .profile-grid {
   display: grid;
-  grid-template-columns: 100px 1fr;
-  gap: 1.5rem;
+  grid-template-columns: 160px 1fr;
+  gap: 2rem;
   align-items: start;
 }
 
 .profile-photo img {
-  width: 180px;
-  height: 180px;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
   border-radius: 12px;
 }
