@@ -216,7 +216,7 @@ footer.page-foot{ margin-top:3rem; padding-top:1.4rem; border-top:1px solid var(
   width: 90px;
   height: 90px;
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: 12px;
 }
 
 @media (max-width: 800px) {
@@ -227,9 +227,7 @@ footer.page-foot{ margin-top:3rem; padding-top:1.4rem; border-top:1px solid var(
 
   .profile-photo img {
     width: 80px;
-    height: 80px;  
-     object-fit: cover;
-border-radius: 12px;
+    height: 80px;
   }
 
 }
