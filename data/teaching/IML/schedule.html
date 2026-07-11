@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>IML - Robotics</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="img/turtlebot3_waffle_arm_favicon.png">
+
+    <!-- highlightjs -->
+    <link rel="stylesheet" href="./css/atom-one-dark.min.css">
+    <script src="./css/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- My CSS -->
+    <link href="css/intro_robo.css" rel="stylesheet">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+
+      <script>
+      eval("compteur0=0");
+      function compteurWeek(){
+              document.write(eval(compteur0));
+          };
+       eval("compteur1=0");
+       function compteurLesson(){
+                  document.write(eval(compteur1));
+              };
+      function compteurWeek_INC(){
+              eval("compteur0++");
+              document.write(eval(compteur0));
+          };
+       eval("compteur1=0");
+       function compteurLesson_INC(){
+                  eval("compteur1++");
+                  document.write(eval(compteur1));
+              };
+        eval("compteur2=0");
+        function compteurLAB_INC(){
+                     eval("compteur2++");
+                     document.write(eval(compteur2));
+                 };
+        function compteurLAB(){
+                       document.write(eval(compteur2));
+                   };
+      </script>
+      
+      
+      
+    <!--Navigation bar-->
+    <div id="nav-placeholder"></div>
+    <script>
+    $(function(){
+      $("#nav-placeholder").load("navbar.html");
+    });
+    </script>
+    <!--end of Navigation bar-->
+
+    <div class="centered-body">
+
+      <center>
+        <h1>IML - Course Schedule</h1>
+      </center>
+
+      <br/>
+
+      <br>
+
+
+      <!--div class="callout">
+        <span class="callout-text-title">Note: </span>
+         SIIA schedule: <a href="https://teamup.com/ksftioy14et6vddeen"> planning </a>
+      </div-->
+     
+      <br>
+      <br>
+      
+      <hr>
+      <h2> Part I : Interactive Machine Learning&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp (18h + exam) </h2>
+      <hr>
+      
+      <br>
+      
+      <table class="table table-hover">
+
+          <tr>
+            <th>Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+            <th>Lesson</th>
+            <th>Comment</th>
+            <th>Lab</th>
+            <th>Teacher</th>
+          </tr>
+
+          
+          <tr>
+            <th>Week <script>compteurWeek_INC()</script></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <td>07/09/2022</td>
+            <td><a href="class_welcome.html">Lesson <script>compteurLesson_INC()</script></a>: Welcome</td>
+            <td>
+            <td>
+              </td>
+            <td>P. De Loor</td>
+          </tr>
+          <tr>
+            <td>07/09/2022</td>
+            <td><a href="class_introduction.html">Lesson <script>compteurLesson_INC()</script></a>: Introduction to ML</td>
+            <td>
+            <td>
+              </td>
+            <td>P. De Loor</td>
+          </tr>
+      
+
+      <tr>
+        <td>07/09/2022</td>
+        <td><a href="class_data.html">Lesson <script>compteurLesson_INC()</script></a>: Data</td>
+        <td>
+        <td>
+          </td>
+        <td>P. De Loor</td>
+      </tr>
+    
+ </td>
+    </tr>
+
+    
+   
+      <td>08/09/2022</td>
+      <td><a href="class_measures.html">Lesson <script>compteurLesson_INC()</script></a>: Measures & Features extraction</td>
+      <td></td>
+      <td></td>
+      <td>P. De Loor</td>
+      </tr>
+    
+    <tr>
+      <td>08/09/2022</td>
+      <td></td>
+      <td></td>
+      <td><a href="class_galaxies.html">Lab <SCRIPT>compteurLAB_INC()</script>: </a>Classification
+        </td>
+      <td>A. Dizet</td>
+    </tr>
+        
+    
+    <tr>
+        <th>Week <script>compteurWeek_INC()</script></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr>
+      <td>14/09/2022</td>
+      <td></td>
+      <td></td>
+      <td><a href="class_galaxies.html">Lab <SCRIPT>compteurLAB()</script>: </a>Classification
+        </td>
+      <td>A. Dizet</td>
+    </tr>
+    
+    
+    <tr>
+      <td>14/09/2022</td>
+      <td></td>
+      <td></td>
+      <td><a href="class_galaxies.html">Lab <SCRIPT>compteurLAB()</script>: </a>Classification
+        </td>
+      <td>A. Dizet</td>
+    </tr>
+    <tr>
+        <th>Week <script>compteurWeek_INC()</script></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr>
+      <td>20/09/2022</td>
+      <td><a href="class_meeting_DeepL.html">Lesson <script>compteurLesson_INC()</script></a>: Deep Learning </td>
+      <td></td>
+      <td></td>
+      <td>P. De Loor</td>
+    </tr>
+    
+    
+    <tr>
+      <td>20/09/2022</td>
+      <td></td>
+      <td></td>
+      <td><a href="https://colab.research.google.com/drive/10Q1ATwq20wf3FbUc_w2xddRKepEGlcfj?authuser=1">Lab <SCRIPT>compteurLAB_INC()</script>: </a>Deep Learning </td>
+      <td>P. De Loor</td>
+    </tr>
+    
+    
+    
+    <tr>
+        <th>Week <script>compteurWeek_INC()</script></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr>
+      <td>27/09/2022</td>
+      <td></td>
+      <td></td>
+      <td><a href="https://colab.research.google.com/drive/10Q1ATwq20wf3FbUc_w2xddRKepEGlcfj?authuser=1">Lab <SCRIPT>compteurLAB()</script>: </a>Deep Learning</td>
+      <td>P. De Loor</td>
+    </tr>
+    <tr>
+        
+       
+    
+        <tr>
+          <td>27/09/2022</td>
+          <th><p style="color:red;">EXAM</p></th>
+          <td></td>
+          <td> </td>
+          <td>P. De Loor</td>
+        </tr>
+        <tr>
+        
+        <td></td>
+      <td></td>
+    <td></td>
+      <td></td>
+      <th></th>
+    </tr>
+         </table>
+
+
+         <br/>
+
+    <hr>
+    <h2> Part II : Interactive Machine Learning and Robotic  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp (28h)</h2>
+    <hr>
+    
+    <br>
+    
+    <table class="table table-hover">
+
+        <tr>
+          <th>Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+          <th>Lesson&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+          <th>Comment</th>
+          <th>Lab</th>
+          <th>Teacher</th>
+        </tr>
+
+    <tr>
+        <th>Week <script>compteurWeek_INC()</script></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr>
+      <td>04/10/2022</td>
+      <td><a href="class_introInteractiveRobotic.html">Lesson <script>compteurLesson_INC()</script></a>: Introduction to Interactive Robotic</td>
+      <td></td>
+      <td></td>
+      <td>A. Dizet</td>
+    </tr>
+    
+    
+      <td>04/10/2022</td>
+      <td></td>
+      <td></td>
+      <td><a href="tp_qiBullet.html">Lab <SCRIPT>compteurLAB_INC()</script>:</a> Robotic </td>
+      <td>A. Dizet</td>
+    </tr>
+    
+          <tr>
+              <th>Week <script>compteurWeek_INC()</script></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+          
+               <td>13/10/2022</td>
+            <td><a href="./data/coursROS2/cours_ROS2_IML.pdf">Lesson <script>compteurLesson_INC()</script></a>: Introduction to ROS2 </td>
+          <td></td>
+            <td> 
+            </td>
+            <td>N. Argaw</td>
+          </tr> 
+          
+          <tr>
+            <td>13/10/2022</td>
+            <td> </td>
+            <td>
+                Before class:
+                <ul>
+                  <li><a href="computer_setup.html">Set up your robot programming environment</a></li>
+                </ul>
+              </td>
+            <td> <a href="class_ROS2.html"> Lab <SCRIPT>compteurLAB_INC()</script>:</a> ROS2 
+              </td>
+            <td>N. Argaw</td>
+          </tr>
+          
+          
+                  
+              <td>13/10/2022</td>
+            <td> </td>
+          <td></td>
+            <td><a href="class_ROS2_tools.html">
+             Lab <SCRIPT>compteurLAB_INC()</script>:</a> ROS2 tools 
+            </td>
+            <td>N. Argaw</td>
+          </tr> 
+
+
+              <td>13/10/2022</td>
+            <td> </td>
+          <td></td>
+            <td><a href="class_gazebo.html">
+             Lab <SCRIPT>compteurLAB_INC()</script>:</a> ROS2 + Gazebo 
+            </td>
+            <td>N. Argaw</td>
+          </tr>
+          
+          
+          <tr>
+        
+        
+        <th>Week <script>compteurWeek_INC()</script></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <td></td>
+    </tr>
+
+
+              <td>20/10/2022</td>
+            <td> </td>
+          <td></td>
+            <td><a href="class_gazebo.html">
+             Lab <SCRIPT>compteurLAB()</script>:</a> ROS2 + Gazebo 
+            </td>
+            <td>N. Argaw</td>
+          </tr>
+          <tr>
+
+          
+          <tr>
+              <td>20/10/2022</td>
+            <td> </td>
+          <td></td>
+            <td><a href="class_meeting_sensoryMotorControl.html"> Lab <SCRIPT>compteurLAB_INC()</script>:</a> Control</td>
+            <td>N. Argaw</td>
+          </tr>
+          
+          <tr>
+              <th>Week <script>compteurWeek_INC()</script></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <td></td>
+          </tr>
+          <tr>
+              <td>25/10/2022</td>
+            <td><a href="class_vision.html">Lesson <script>compteurLesson_INC()</script></a>: Perception (Vision)</td>
+            <td></td>
+            <td></td>
+            <td>R. Cazorla </td>
+          </tr>
+          <tr>
+    <tr>
+        <td>25/10/2022</td>
+      <td></td>
+      <td></td>
+      <td><a href="class_vision_tp.html">Lab <SCRIPT>compteurLAB_INC()</script>:</a>
+         Perception (Vision)
+               </td>
+      <td>R. Cazorla</td>
+    </tr>
+              
+                        <tr>
+        
+        
+        <!--th bgcolor="gainsboro"></script></th>
+      <th bgcolor="gainsboro"></th>
+      <th bgcolor="gainsboro">TOUSSAINT</th>
+      <th bgcolor="gainsboro"></th>
+      <td bgcolor="gainsboro"></td>
+    </tr-->
+              
+              
+              <!--tr>
+                  <th>Week <script>compteurWeek_INC()</script></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <td></td>
+              </tr>
+              <tr>
+                  <td>08/11/2022</td>
+                <td><a href="class_meeting_05.html">Lesson <script>compteurLesson_INC()</script></a>: Navigation (Mapping) </td>
+                <td></td>
+                <td></td>
+                <td> ?</td>
+              </tr>
+             
+      <tr>
+          <td>08/11/2022</td>
+        <td></td>
+        <td></td>
+        <th><a href="class_range_finders.html">Lab <SCRIPT>compteurLAB_INC()</script>: Navigation (Localization)</a>
+                 </th>
+        <td> ?</td>
+      </tr-->
+          
+          <tr>
+              <th>Week <script>compteurWeek_INC()</script></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <td></td>
+          </tr>
+          <tr>
+              <td>17/11/2022</td>
+            <td><a href="https://www.enib.fr/~buche/data/IML/data/slam/Cours_Navigation_SLAM_IML_2022_HABIB_Yassine.pdf">Lesson <script>compteurLesson_INC()</script></a>: Navigation (SLAM)</td>
+            <td> 
+
+            
+            </td>
+            <td></td>
+            <td>Y. Habib</td>
+          </tr>
+          <tr>
+          
+       
+          <tr>
+              <td>17/11/2022</td>
+            <td></td>
+            <td> 
+
+            
+            </td>
+            <td><a href="class_slam_tp.html">Lab <SCRIPT>compteurLAB_INC()</script></a>: Navigation (SLAM)</td>
+            <td>Y. Habib</td>
+          </tr>
+          <tr>       
+              
+              
+              <tr>
+                  <th>Week <script>compteurWeek_INC()</script></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <td></td>
+              </tr>
+              <td>22/11/2022</td>
+            <td><a href="data/grasping/Kinematics.pdf">Lesson <script>compteurLesson_INC()</script></a>: Movement (Kinematics)</td>
+            <td>
+                  Related package:
+                  <ul>
+                    <li>
+                       MoveIt 2
+                    </li>
+                  </ul>
+            
+            </td>
+            <td></td>
+            <td>M. Andries</td>
+          </tr>
+              
+  
+     
+ <tr>
+     <td>22/11/2022</td>
+   <td></td>
+   <td></td>
+   <td>Lab <SCRIPT>compteurLAB_INC()</script>:
+     <a href="data/grasping/kinematics_tp.pdf"> Movement (Kinematics)</a>
+            </td>
+   <td>M. Andries</td>
+ </tr>
+        
+          
+                       
+                       
+                       <tr>
+                           <th>Week <script>compteurWeek_INC()</script></th>
+                         <th></th>
+                         <th></th>
+                         <th></th>
+                         <td></td>
+                       </tr>
+                       <td>24/11/2022</td>
+                     <td><a href="data/grasping/Grasping.pdf">Lesson <script>compteurLesson_INC()</script></a>: Grasping</td>
+                     <td>
+                     
+                     </td>
+                     <td></td>
+                     <td>M. Andries</td>
+                   </tr>
+                   
+                  
+               <tr>
+                   <td>24/11/2022</td>
+                 <td></td>
+                 <td></td>
+                 <td>Lab <SCRIPT>compteurLAB_INC()</script>:
+                   <a href="data/grasping/BOT_Manipulation.zip"> Grasping</a>
+                          </td>
+                 <td>M. Andries</td>
+               </tr>
+                
+                     
+                       <tr>
+                           <th></th>
+                         <th></th>
+                         <th></th>
+                         <th></th>
+                         <td></td>
+                       </tr>
+        
+          
+          
+          </TABLE>
+          
+
+      <br/>
+
+    </div><!-- /.centered-body -->
+
+    <!-- footer -->
+    <div class="footer">
+      <div class="centered-body">
+        <div class="row footer-sebo-copyright">
+              &#169; Cedric Buche
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

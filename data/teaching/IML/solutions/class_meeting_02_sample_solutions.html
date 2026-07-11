@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>IML - Robotics</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="img/turtlebot3_waffle_arm_favicon.png">
+
+    <!-- highlightjs -->
+    <link rel="stylesheet" href="../css/atom-one-dark.min.css">
+    <script src="../css/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- My CSS -->
+    <link href="../css/intro_robo.css" rel="stylesheet">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH3w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+
+    <!--Navigation bar-->
+    <div id="nav-placeholder"></div>
+    <script>
+    $(function(){
+      $("#nav-placeholder").load("navbar.html");
+    });
+    </script>
+    <!--end of Navigation bar-->
+
+    <div class="centered-body">
+
+      <center>
+        <h1>Solutions</h1>
+      </center>
+
+      <br/><br/>
+
+
+      <br/>
+      <h3><code>spin_in_circles.py</code></h3>
+
+      <pre><code class="Python">#!/usr/bin/env python3
+          
+          import rclpy
+          from rclpy.node import Node
+          from geometry_msgs.msg import Twist
+
+          class SpinCircles(Node):
+
+              def __init__(self):
+                  super().__init__('spin_circles')
+                  self.publisher_ = self.create_publisher(Twist, '/turtle1/cmd_vel', 10)
+                  timer_period = 0.5  # seconds
+                  self.timer = self.create_timer(timer_period, self.timer_callback)
+
+              def timer_callback(self):
+                  vel = Twist()
+                  vel.linear.x=1.0
+                  vel.angular.z=0.9
+                  self.publisher_.publish(vel)
+                  self.get_logger().info('Publishing: x"%f"' % vel.linear.x)
+                  self.get_logger().info('Publishing: z"%f"' % vel.angular.z)
+
+
+          def main(args=None):
+              rclpy.init(args=args)
+              pc_publisher = SpinCircles()
+              rclpy.spin(pc_publisher)
+              pc_publisher.destroy_node()
+              rclpy.shutdown()
+
+
+          if __name__ == '__main__':
+              main()
+</pre></code>
+
+
+
+      <br/>
+      <h3><code>stop_at_wall.py</code></h3>
+
+      <pre><code  class="Python">#!/usr/bin/env python3
+​
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+
+# msgs needed for /cmd_vel
+from geometry_msgs.msg import Twist, Vector3
+
+from sensor_msgs.msg import LaserScan
+
+# How close we will get to wall.
+distance = 1
+
+class StopAtWall(Node):
+
+    def __init__(self):
+        super().__init__('walk_to_wall')
+        
+        # Create a default twist msg (all values 0).
+        lin = Vector3()
+        ang = Vector3()
+        self.twist = Twist(linear=lin,angular=ang)
+
+        # Publish msg to cmd_vel.
+        self.publisher_ = self.create_publisher(
+                Twist,      # message type
+                '/demo/cmd_demo',  # topic name
+                10)          # history depth
+        
+        self.sub_lidar = self.create_subscription(
+                LaserScan,
+                '/scan',
+                self.scan_callback,  # function to run upon message arrival
+                10)  # allows packet loss
+
+    def scan_callback(self,data):
+        self.get_logger().info("StopAtWall heard: {}".format(data.ranges[0]))
+        if data.ranges[0] >= distance:
+            # Go forward if not close enough to wall.
+            self.twist.linear.x = 0.5
+            self.get_logger().info("Go baby".format(data.ranges[0]))
+        else:
+            # Close enough to wall, stop.
+            self.twist.linear.x = 0.0
+            self.get_logger().info("STOP baby".format(data.ranges[0]))
+        self.publisher_.publish(self.twist)
+
+def main(args=None):
+    rclpy.init(args=args)
+    pc_publisher = StopAtWall()
+    rclpy.spin(pc_publisher)
+    pc_publisher.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
+</pre></code>
+
+
+      <br/>
+
+    </div><!-- /.centered-body -->
+
+    <!-- footer -->
+    <div class="footer">
+      <div class="centered-body">
+        <div class="row footer-sebo-copyright">
+              &#169;  Cedric Buche
+        </div>
+      </div>
+    </div>
+    
+  </body>
+</html>

@@ -1,0 +1,312 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-weight: 300;
+  font-size: 18px;
+  margin-bottom: 54px;
+}
+h1, h2, h3 {
+  font-weight: bold;
+  color:  #505050;
+}
+hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+pre {
+  /*background: #474949;*/
+  background: #282c34;
+  font-size: 15px;
+}
+.centered-body {
+    max-width: 1100px;
+    margin-right: auto;
+    margin-left: auto;
+}
+@media (max-width: 1200px) {
+  .centered-body{
+    margin: 0px 100px;
+  }
+}
+@media (max-width: 768px) {
+  .centered-body{
+    margin: 0px 50px;
+  }
+}
+.callout {
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+  border-radius: 3px;
+  border-left-color: #a37eba;
+}
+.callout h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: #a37eba;
+}
+.callout p:last-child {
+    margin-bottom: 0;
+}
+.callout code {
+    border-radius: 3px;
+}
+.callout-text-title {
+    color: #a37eba;
+    font-weight: bold;
+}
+.centered-caption {
+  text-align: center;
+}
+.centered-youtube-video{
+  text-align: center;
+  margin: 20px;
+}
+.centered-table {
+  text-align: center;
+}
+.explanatory-img img{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  height: auto;
+}
+.explanatory-img-full-width img {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 95%;
+}
+.final-project-example img{
+  /*max-height: 200px;*/
+  max-width: auto;
+  margin: 0px auto;
+}
+.footer {
+  background-color: #f5f5f5;
+  bottom: 0;
+  height: 54px;
+  padding: 10px 0px;
+  position: absolute;
+  width: 100%;
+}
+.footer-sebo-copyright {
+    text-align: center;
+    padding-top: 5px;
+}
+.index-course-project-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #505050;
+}
+.navbar-custom {
+  /*background-color: #4c4c4c;*/
+  /*background-color: #303030;*/
+  background-color: #282c34;
+  font-size: 14pt;
+}
+.navbar-custom .navbar-brand {
+  color: #fff;
+  font-size: 16pt;
+}
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .navbar-brand:focus {
+  color: #fff;
+  background-color: transparent;
+}
+.navbar-custom .navbar-nav > li > a {
+  color: #fff;
+}
+.navbar-custom .navbar-nav > li > a:hover,
+.navbar-custom .navbar-nav > li > a:focus {
+  color: #fff;
+  background-color: transparent;
+}
+.navbar-custom .navbar-nav > .active > a,
+.navbar-custom .navbar-nav > .active > a:hover,
+.navbar-custom .navbar-nav > .active > a:focus {
+  color: #fff;
+}
+.navbar-custom .navbar-nav > .disabled > a,
+.navbar-custom .navbar-nav > .disabled > a:hover,
+.navbar-custom .navbar-nav > .disabled > a:focus {
+  color: #fff;
+  background-color: transparent;
+}
+.navbar-custom .navbar-nav > .open > a,
+.navbar-custom .navbar-nav > .open > a:hover,
+.navbar-custom .navbar-nav > .open > a:focus {
+  color: #fff;
+}
+@media (max-width: 767px) {
+  .navbar-custom .navbar-nav .open .dropdown-menu > li > a {
+    color: #fff;
+  }
+  .navbar-custom .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-custom .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #fff;
+    background-color: transparent;
+  }
+  .navbar-custom .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #fff;
+  }
+  .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a,
+  .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a:hover,
+  .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+    color: #fff;
+    background-color: transparent;
+  }
+}
+.navbar-custom .navbar-toggle {
+  border-color: #fff;
+}
+.navbar-custom .navbar-toggle:hover,
+.navbar-custom .navbar-toggle:focus {
+  background-color: #64a1f4;
+}
+.navbar-custom .navbar-toggle .icon-bar {
+  background-color: #fff;
+}
+.navbar-custom .navbar-collapse,
+.navbar-custom .navbar-form {
+  border-color: #fff;
+}
+.navbar-custom .navbar-link {
+  color: #fff;
+}
+.navbar-custom .navbar-link:hover {
+  color: #fff;
+}
+.navbar-custom .btn-link {
+  color: #fff;
+}
+.navbar-custom .btn-link:hover,
+.navbar-custom .btn-link:focus {
+  color: #fff;
+}
+.navbar-custom .btn-link[disabled]:hover,
+fieldset[disabled] .navbar-custom .btn-link:hover,
+.navbar-custom .btn-link[disabled]:focus,
+fieldset[disabled] .navbar-custom .btn-link:focus {
+  color: #fff;
+}
+.navbar-custom-dropdown-menu {
+  font-size: 18px;
+}
+.navbar-custom-dropdown-menu a {
+  display: block;
+  padding: 3px 5px;
+  clear: both;
+  font-weight: normal;
+  color: #262626;
+  text-decoration: none;
+  white-space: nowrap;
+}
+@media (max-width: 767px) {
+  .navbar-custom-dropdown-menu {
+    padding-left: 20px;
+  }
+  .navbar-custom-dropdown-menu a {
+    color: #fff;
+  }
+}
+.navbar-custom-dropdown-menu a:hover,
+.navbar-custom-dropdown-menu a:focus {
+  color: #262626;
+  text-decoration: none;
+  background-color: #f5f5f5;
+}
+.navbar-uchicago-logo {
+  margin-left: -15px;
+  float: left;
+  height: 50px;
+  padding: 6px 10px;
+  font-size: 18px;
+  line-height: 20px;
+}
+@media (max-width: 767px) {
+  .navbar-uchicago-logo {
+    height: 50px;
+    margin-left: 0px;
+    padding-left: 10px;
+    padding-right: 0px;
+  }
+}
+.padded-img {
+  padding: 20px;
+  text-align: center;
+}
+.panelist {
+  text-align: center;
+}
+.panelist img{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  height: auto;
+}
+.project-preview img{
+  max-height: 200px;
+  margin: 0px auto;
+
+}
+.robot-descr {
+    text-align: center;
+}
+.robot-img img {
+    display: block;
+    max-width: 100%;
+    max-height: 135px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.short-text {
+  display: none;
+}
+@media (max-width: 767px) {
+  .short-text { display: inline-block; }
+  .full-text { display: none; }
+}
+.staff-img img {
+    max-width: 135px;
+}
+.teaching-team-index {
+  padding: 4px 60px;
+  text-align: center;
+}
+.teaching-team-index img {
+  margin-bottom: 10px;
+}
+.text-color-light-blue {
+  color: #00AEEF ;
+  font-weight: bold;
+}
+.text-color-light-green {
+  color: #00A651 ;
+  font-weight: bold;
+}
+.text-color-pink {
+  color: #EC008C;
+  font-weight: bold;
+}
+.text-color-purple {
+  color: #662D91 ;
+  font-weight: bold;
+}
+.vrobot-img {
+  padding: 20px;
+  text-align: center;
+}
+.vrobot-img img {
+  max-height: 250px;
+}

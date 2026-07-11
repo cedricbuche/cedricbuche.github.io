@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>IML - Robotics</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="img/turtlebot3_waffle_arm_favicon.png">
+
+    <!-- highlightjs -->
+    <link rel="stylesheet" href="./css/atom-one-dark.min.css">
+    <script src="./css/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- My CSS -->
+    <link href="css/intro_robo.css" rel="stylesheet">
+
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+
+
+    <div class="centered-body">
+
+      <center>
+        <h1>Lab: Introduction to ROS2 tools </h1>
+      </center>
+
+      <br/>
+      <h2>Today's Lesson</h2>
+      <hr/>
+
+ 
+
+      
+      Practice :
+          <ul>
+              <li>  <a href="#RVIZ"> RVIZ </a></li>
+              <li>  <a href="#URDF"> URDF </a></li>
+              <li>  <a href="#launch"> LAUNCH </a></li>
+          </ul>
+      
+      <br/>
+
+    
+    
+    <hr>
+    <h2 id="RVIZ">RVIZ</h2>
+    
+    <hr>
+    rviz is a tool to simulate, publish and visualize ROS 2 sensor data.
+    <br>
+    <br>
+    
+    Let's simulate a point cloud sensor :
+    <code>pointCloudPublisher.py</code>
+    <pre><code class="Python">
+        import numpy as np
+
+        import rclpy
+        from rclpy.node import Node
+        from sensor_msgs.msg import PointCloud2
+        from sensor_msgs.msg import PointField
+        from sensor_msgs_py import point_cloud2
+        from std_msgs.msg import Header
+
+
+        class PointCloudPublisher(Node):
+
+            rate = 30
+            moving = True
+            width = 100
+            height = 100
+
+            header = Header()
+            header.frame_id = 'map'
+
+            dtype = PointField.FLOAT32
+            point_step = 16
+            fields = [PointField(name='x', offset=0, datatype=dtype, count=1),
+                      PointField(name='y', offset=4, datatype=dtype, count=1),
+                      PointField(name='z', offset=8, datatype=dtype, count=1),
+                      PointField(name='intensity', offset=12, datatype=dtype, count=1)]
+
+            def __init__(self):
+                super().__init__('pc_publisher')
+                self.publisher_ = self.create_publisher(PointCloud2, 'test_cloud', 10)
+                timer_period = 1 / self.rate
+                self.timer = self.create_timer(timer_period, self.timer_callback)
+                self.counter = 0
+
+            def timer_callback(self):
+                self.header.stamp = self.get_clock().now().to_msg()
+                x, y = np.meshgrid(np.linspace(-2, 2, self.width), np.linspace(-2, 2, self.height))
+                z = 0.5 * np.sin(2*x-self.counter/10.0) * np.sin(2*y)
+                points = np.array([x, y, z, z]).reshape(4, -1).T
+                pc2_msg = point_cloud2.create_cloud(self.header, self.fields, points)
+                self.publisher_.publish(pc2_msg)
+
+                if self.moving:
+                    self.counter += 1
+
+
+        def main(args=None):
+            rclpy.init(args=args)
+            pc_publisher = PointCloudPublisher()
+            rclpy.spin(pc_publisher)
+            pc_publisher.destroy_node()
+            rclpy.shutdown()
+
+
+        if __name__ == '__main__':
+            main()
+    </code></pre>
+    
+    
+    Add <kbd>rclpy</kbd>, <kbd> sensor_msgs_py</kbd>, <kbd>  python3-numpy</kbd>, <kbd>  sensor_msgs</kbd>, <kbd>  std_msgs</kbd> dependency in <code>package.xml</code>
+    <xmp>
+    <build_type>ament_python</build_type>
+    ...
+    <depend>rclpy<</depend>
+    <depend>sensor_msgs_py</depend>
+    <depend>python3-numpy</depend>
+    <depend>sensor_msgs</depend>
+    <depend>std_msgs</depend>
+    </xmp>
+    
+    
+    Build only the <kbd>iml_buche_test_2</kbd> package :
+    
+       <pre><code class="Bash">
+    $ colcon build --packages-select iml_buche_test_2
+       </code></pre>
+    
+    While running :
+       <pre><code class="Bash">
+          $ rviz2
+       </code></pre>
+    Add "pointcloud2"
+    <br>
+    <br>
+    <br>
+    
+<div>
+          <img src="./img/pointClound_rviz.jpg" class="img-responsive" alt="PointCloundRviz">
+        </div>
+    
+    <br>
+    <br>
+    <hr>
+    <h2 id="URDF">URDF</h2>
+    <hr>
+    URDF is used to describe kinematic and dynamic properties of a robot. It is written in XML and commonly used in ROS applications.
+    <br>
+    
+    Let's try to code the following structure :
+    
+        <img src="./data/link.png" class="img-responsive" alt="IMG" width="400"
+            height="500">
+    </br>
+    
+        Create a directory for urdf files (inside the package):
+       <pre><code class="Bash">
+	mkdir urdf
+     </code></pre>  
+    
+    
+    Create <code>my_robot.urdf</code> and place it in <kbd>ros2_ws/src/iml_buche_test_2/urdf/</kbd>
+    <xmp>
+        <robot name="test_robot">
+          <link name="link1" />
+          <link name="link2" />
+          <link name="link3" />
+          <link name="link4" />
+
+          <joint name="joint1" type="continuous">
+            <parent link="link1"/>
+            <child link="link2"/>
+          </joint>
+
+          <joint name="joint2" type="continuous">
+            <parent link="link1"/>
+            <child link="link3"/>
+          </joint>
+
+          <joint name="joint3" type="continuous">
+            <parent link="link3"/>
+            <child link="link4"/>
+          </joint>
+        </robot>
+    </xmp>
+    
+    Check if the file is correct
+    <pre><code class="Bash">
+        $ check_urdf my_robot.urdf
+    </code></pre>
+        
+        Add the dimensions
+        
+        <xmp>
+<robot name="test_robot">
+  <link name="link1" />
+  <link name="link2" />
+  <link name="link3" />
+  <link name="link4" />
+
+
+  <joint name="joint1" type="continuous">
+    <parent link="link1"/>
+    <child link="link2"/>
+    <origin xyz="5 3 0" rpy="0 0 0" />
+  </joint>
+
+  <joint name="joint2" type="continuous">
+    <parent link="link1"/>
+    <child link="link3"/>
+    <origin xyz="-2 5 0" rpy="0 0 1.57" />
+  </joint>
+
+  <joint name="joint3" type="continuous">
+    <parent link="link3"/>
+    <child link="link4"/>
+    <origin xyz="5 0 0" rpy="0 0 -1.57" />
+  </joint>
+</robot>
+         
+        </xmp>
+         
+         
+         Completing the Kinematics : which axis the joints rotate
+         <xmp>
+<robot name="test_robot">
+  <link name="link1" />
+  <link name="link2" />
+  <link name="link3" />
+  <link name="link4" />
+
+  <joint name="joint1" type="continuous">
+    <parent link="link1"/>
+    <child link="link2"/>
+    <origin xyz="5 3 0" rpy="0 0 0" />
+    <axis xyz="-0.9 0.15 0" />
+  </joint>
+
+  <joint name="joint2" type="continuous">
+    <parent link="link1"/>
+    <child link="link3"/>
+    <origin xyz="-2 5 0" rpy="0 0 1.57" />
+    <axis xyz="-0.707 0.707 0" />
+  </joint>
+
+  <joint name="joint3" type="continuous">
+    <parent link="link3"/>
+    <child link="link4"/>
+    <origin xyz="5 0 0" rpy="0 0 -1.57" />
+    <axis xyz="0.707 -0.707 0" />
+  </joint>
+</robot>
+
+         </xmp>
+        
+        Visualize the URDF using graphiz
+        
+        <pre><code class="Bash">
+          $ urdf_to_graphviz my_robot.urdf
+          $ evince test_robot.pdf
+        </code></pre>
+        
+        
+    
+    <br>
+    <br>
+ 
+    <hr>
+    <h2 id="launch">LAUNCH</h2>
+    <hr>
+    A launch file helps to run a complex ROS 2 system.
+    <br><br>
+    
+    Modify <code>setup.py</code> to add path to launch files (+ udrf files + world files)
+    
+    
+
+    <pre><code class="Python">
+from setuptools import setup
+import os
+from glob import glob
+
+package_name = 'iml_buche_test_2'
+
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=[package_name],
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+        (os.path.join('share', package_name), glob('launch/*.py')),
+        (os.path.join('share', package_name), glob('urdf/*')),
+        (os.path.join('share', package_name), glob('worlds/*')),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='buche',
+    maintainer_email='buche@todo.todo',
+    description='TODO: Package description',
+    license='TODO: License declaration',
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+            'test_python_receiver_node = iml_buche_test_2.receiver:main',
+            'test_python_publisher_node = iml_buche_test_2.publisher:main',
+            'test_python_pointCloud_node = iml_buche_test_2.pointCloudPublisher:main'
+        ],
+    },
+)
+           </pre>
+           </code>
+           
+    <h3> Launch file - Nodes </h3>
+    A launch file enables you to launch multiple ROS 2 nodes at the same time.
+    
+     <pre><code class="Bash">
+    ros2 launch package_name launch_file_name
+     </code></pre>
+    
+    Create a directory for launch files (inside the package):
+       <pre><code class="Bash">
+	mkdir launch
+     </code></pre>  
+    
+    
+    Create a new file, <code>iml_test.launch.py</code> (inside the launch directory) with the following skeleton:
+
+    <pre><code class="Python">
+import launch
+import launch_ros
+
+def generate_launch_description():
+    return launch.LaunchDescription([
+        # launch actions here...
+    ])
+             </pre>
+             </code>
+    
+    Try to make a launch file starting Publisher and Receiver
+    
+    
+    <pre><code class="Python">
+import os
+from ament_index_python.packages import get_package_share_directory
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument, ExecuteProcess
+from launch.substitutions import LaunchConfiguration
+from launch_ros.actions import Node
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+
+def generate_launch_description():
+  package_dir=get_package_share_directory('pkgname')
+  urdf = os.path.join(package_dir,'urdf_file.urdf')
+
+  return LaunchDescription([
+    #   publishes TF for links of the robot without joints
+        Node(
+            package='iml_buche_test_2',
+            executable='test_python_receiver_node',
+            output="screen"
+        ),
+        Node(
+            package='iml_buche_test_2',
+            executable='test_python_publisher_node',
+            output="screen"
+        )
+  ])
+     </pre>
+             </code>
+    
+    
+    After launching the launch.py file, the output should be similar to the following:
+    
+<div>
+          <img src="./img/luanchfile.jpg" class="img-responsive" alt="PointCloundRviz">
+        </div>
+    
+    
+     
+    
+    </div><!-- /.centered-body -->
+
+    <!-- footer -->
+    <div class="footer">
+      <div class="centered-body">
+        <div class="row footer-sebo-copyright">
+              &#169; Cedric Buche
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

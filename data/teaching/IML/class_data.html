@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Interactive Machine Learning</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="img/turtlebot3_waffle_arm_favicon.png">
+
+    <!-- highlightjs -->
+    <link rel="stylesheet" href="./css/atom-one-dark.min.css">
+    <script src="./css/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- My CSS -->
+    <link href="css/intro_robo.css" rel="stylesheet">
+
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+
+    <!--Navigation bar-->
+    <div id="nav-placeholder"></div>
+    <script>
+    $(function(){
+      $("#nav-placeholder").load("navbar.html");
+    });
+    </script>
+    <!--end of Navigation bar-->
+
+    <div class="centered-body">
+
+      <center>
+        <h1>Lesson: Data</h1>
+      </center>
+
+      <br/>
+      <h2>Today's Lesson</h2>
+      <hr/>
+
+      <ul>
+        <li>Data : <a href="./data/data_ML/cours_data_IML_cb.pdf">link to the slides</a></li>
+      </ul>
+
+      <br/>
+
+
+      <div class="callout">
+        <span class="callout-text-title">Note: </span>
+        resources are available here : <a href="https://www.enib.fr/~buche/data/IML/data/data_ML/code/">https://www.enib.fr/~buche/data/IML/data/data_ML/code/</a>
+      </div>
+
+
+      <h2>autodiff.py</h2>
+      <div class="centered-body">
+        <p><iframe src="./data/data_ML/code/autodiff.py" frameborder="0" height="400" width="95%"></iframe></p>
+      </div>
+    
+    <h2>gaussiene_RL.py</h2>
+    <div class="centered-body">
+      <p><iframe src="./data/data_ML/code/gaussiene_RL.py" frameborder="0" height="400" width="95%"></iframe></p>
+    </div>
+    
+    <h2>iris_pca.py</h2>
+    <div class="centered-body">
+      <p><iframe src="./data/data_ML/code/iris_pca.py" frameborder="0" height="400" width="95%"></iframe></p>
+    </div>
+    
+    
+    <h2>iris.py</h2>
+    <div class="centered-body">
+      <p><iframe src="./data/data_ML/code/iris.py" frameborder="0" height="400" width="95%"></iframe></p>
+    </div>
+    
+    
+    <h2>JFK.py</h2>
+    <div class="centered-body">
+      <p><iframe src="./data/data_ML/code/JFK.py" frameborder="0" height="400" width="95%"></iframe></p>
+    </div>
+    
+    
+    
+    
+    <h2>leastSquare.py</h2>
+    <div class="centered-body">
+      <p><iframe src="./data/data_ML/code/leastSquare.py" frameborder="0" height="400" width="95%"></iframe></p>
+    </div>
+    
+    
+    <h2>players_scatter.py</h2>
+    <div class="centered-body">
+      <p><iframe src="./data/data_ML/code/players_scatter.py" frameborder="0" height="400" width="95%"></iframe></p>
+    </div>
+    
+    
+    <h2>players.py</h2>
+    <div class="centered-body">
+      <p><iframe src="./data/data_ML/code/players.py" frameborder="0" height="400" width="95%"></iframe></p>
+    </div>
+    
+    <h2>spline.py</h2>
+    <div class="centered-body">
+      <p><iframe src="./data/data_ML/code/spline.py" frameborder="0" height="400" width="95%"></iframe></p>
+    </div>
+    
+    <h2>splineJFK.py</h2>
+    <div class="centered-body">
+      <p><iframe src="./data/data_ML/code/splineJFK.py" frameborder="0" height="400" width="95%"></iframe></p>
+    </div>
+    
+    <h2>splineJFKVar.py</h2>
+    <div class="centered-body">
+      <p><iframe src="./data/data_ML/code/splineJFKVar.py" frameborder="0" height="400" width="95%"></iframe></p>
+    </div>
+    
+
+    </div><!-- /.centered-body -->
+
+    <!-- footer -->
+    <div class="footer">
+      <div class="centered-body">
+        <div class="row footer-sebo-copyright">
+              &#169; Cedric Buche
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

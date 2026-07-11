@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>IML - Robotics</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="img/turtlebot3_waffle_arm_favicon.png">
+
+    <!-- highlightjs -->
+    <link rel="stylesheet" href="./css/atom-one-dark.min.css">
+    <script src="./css/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- My CSS -->
+    <link href="css/intro_robo.css" rel="stylesheet">
+
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+
+    <!--Navigation bar-->
+    <div id="nav-placeholder"></div>
+    <script>
+    $(function(){
+      $("#nav-placeholder").load("navbar.html");
+    });
+    </script>
+    <!--end of Navigation bar-->
+
+    <div class="centered-body">
+
+      <center>
+        <h1>Lesson: Sensory-Motor Control</h1>
+      </center>
+
+      <br/>
+
+      <h2>Today's Lesson</h2>
+      <hr/>
+
+      <ul>
+        <li>Learning about sensory-motor control and PID control</li>
+        <li>Writing code to enable vehicule to follow a line - here's a link to a <b><a href="solutions/class_meeting_03_sample_solution.html">sample solution</a></b> for the line follower</li>
+      </ul>
+
+      <br/>
+
+
+
+      <br/>
+      <h2>Sensory-Motor Control and PID Control </h2>
+      <hr/>
+
+
+      <p>
+        One foundational concept in robotics is sensory-motor loops and control. The robot's sensor readings inform how it moves in its environment, which will then influence the next sensor readings from the robot, and the loop goes on. One of the most well known sensory-motor control methods is PID (<b>P</b>roportional <b>I</b>ntegral <b>D</b>erivative) control, which is depicted in the block diagram below:
+      </p>
+
+
+      <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6 explanatory-img">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/PID_en.svg/400px-PID_en.svg.png" class="img-responsive" alt="PID control">
+          <p class="centered-caption">A block diagram of a PID controller in a feedback loop. Source: <a href="https://en.wikipedia.org/wiki/PID_controller">Wikipedia</a>.</p>
+        </div>
+        <div class="col-md-3">
+        </div>
+      </div>
+
+      <p>
+        The PID control function can be represented as follows:
+      </p>
+
+
+      <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6 explanatory-img">
+          <img src="img/pid_control_equation.png" class="img-responsive" alt="PID control equation">
+        </div>
+        <div class="col-md-3">
+        </div>
+      </div>
+
+      <p>
+        Where <i>K<sub>p</sub></i>, <i>K<sub>i</sub></i>, and <i>K<sub>d</sub></i>, are the constant coefficients for the proportional, integral, and derivative terms; <i>e(t)</i> represents the difference between the goal (setpoint) and the sensor measurement (process variable). The three following graphs display how a system responds to a step change in the setpoint to each component of the PID controller separately and all the components combined at different values of <i>K<sub>p</sub></i>, <i>K<sub>i</sub></i>, and <i>K<sub>d</sub></i>.
+      </p>
+
+
+      <div class="row">
+        <div class="col-md-4 explanatory-img">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/PID_varyingP.jpg/320px-PID_varyingP.jpg" class="img-responsive" alt="Proportional control">
+          <p class="centered-caption">Response of the process variable to a step change of the setpoint for different values of <i>K<sub>p</sub></i>. Source: <a href="https://en.wikipedia.org/wiki/PID_controller">Wikipedia</a>.</p>
+        </div>
+        <div class="col-md-4 explanatory-img">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Change_with_Ki.png/320px-Change_with_Ki.png" class="img-responsive" alt="Integral control">
+          <p class="centered-caption">Response of the process variable to a step change of the setpoint for different values of <i>K<sub>i</sub></i>. Source: <a href="https://en.wikipedia.org/wiki/PID_controller">Wikipedia</a>.</p>
+        </div>
+        <div class="col-md-4 explanatory-img">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Change_with_Kd.png/320px-Change_with_Kd.png" class="img-responsive" alt="Derivative control">
+          <p class="centered-caption">Response of the process variable to a step change of the setpoint for different values of <i>K<sub>d</sub></i>. Source: <a href="https://en.wikipedia.org/wiki/PID_controller">Wikipedia</a>.</p>
+        </div>
+      </div>
+
+      <p>
+        This <a href="https://www.youtube.com/watch?v=UR0hOmjaHp0">YouTube video</a> by Brian Douglas is a great resource providing a clear explanation of the PID controller. 
+      </p>
+
+
+
+      <br/>
+      <h2 id="exo1">Coding Exercise: Line Following</h2>
+      <hr/>
+
+
+      <div class="callout">
+      
+      <span class="callout-text-title">Note: </span>  Here's links to files <br>
+<a href="./code/line_follow/setup.py"> <code>setup.py </code> </a><br> 
+<a href="./code/line_follow/gazebo_lineFollow.launch.py"> <code>gazebo_lineFollow.launch.py  </code> </a><br> 
+<a href="./code/line_follow/camera_lidar_gazebo.urdf"> <code>camera_lidar_gazebo.urdf </code> </a><br> 
+<a href="./code/line_follow/line_world.world"> <code>line_world.world </code> </a><br> 
+<a href="./code/line_follow/launch_config.rviz"> <code>launch_config.rviz</code> </a>
+
+      </div>
+
+
+      <br/>
+      <h3>Getting Started</h3>
+      <hr/>
+
+	Considering, we have created <kbd>iml_buche</kbd> package : <br>
+      <pre><code class="Bash">$ ros2 launch iml_buche gazebo_lineFollow.launch.py </code></pre>
+
+      <p>
+        In Gazebo, you should see a vehicule at the beginning of a yellow line in an enclosed room (see image below). Your goal is to program the robot to follow the yellow line, writing your code in <code>line_follower.py</code>.
+      </p>
+
+
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10 explanatory-img">
+          <img src="img/robot_at_beginning_of_line.png" class="img-responsive" alt="Yellow line Gazebo sim">
+        </div>
+        <div class="col-md-1">
+        </div>
+      </div>
+
+
+      <p>
+        The starter code implements a helpful debugging window to help visualize the center of the computed yellow pixels. Once you've correctly identified the center of the yellow pixes, your window should look something like the following: 
+      </p>
+
+      <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4 explanatory-img">
+          <img src="img/dot_visualization.png" class="img-responsive" alt="Red dot visualization">
+        </div>
+        <div class="col-md-4">
+        </div>
+      </div>
+
+      <br/>
+      <h3>Understanding the Starter Code</h3>
+      <hr/>
+
+      <p>
+        Read through the starter code in <code>line_follower.py</code>.  We encourage you to look up what certain OpenCV functions do to better understand what's going on. Make sure that you all discuss and understand what the following variables represent and what values they will hold: <code>h</code>, <code>w</code>, <code>d</code>, <code>cx</code>, <code>cy</code>.
+      </p>
+
+
+      <br/>
+      <h3>Implementing the Line Follower</h3>
+      <hr/>
+
+      <p>
+        This programming exercise contains 2 main components: 
+        <ol>
+          <li>
+            <b>Defining the range for what you will consider a "yellow" pixel in the image feed.</b>
+            <ul>
+              <li>OpenCV uses the following ranges for H, S, and V: <code>H: 0-179, S: 0-255, V: 0-255</code>. As <a href="https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_colorspaces/py_colorspaces.html">this OpenCV documentation</a> suggests, you may find the following helpful (except you'll want to investigate yellow instead of green): 
+
+                <pre><code class="Python">green = np.uint8([[[0,255,0 ]]])
+hsv_green = cv2.cvtColor(green,cv2.COLOR_BGR2HSV)
+print(hsv_green)</code></pre>
+              </li>
+              <li>
+                You may also find the <a href="https://en.wikipedia.org/wiki/HSL_and_HSV#Swatches">"Swatches" section on the HSV Wikipedia page</a> helpful. Remember, you'll have to convert from the HSV ranges in the Wikipedia page <code>H: 0-360, S: 0.0-1.0, V: 0.0-1.0</code> to the numeric ranges OpenCV expects <code>H: 0-179, S: 0-255, V: 0-255</code>.
+                <ul>
+                  <li>For example, the HSV Wikipedia color \(H = 60^{\circ}, S = \frac{1}{4}, V = \frac{5}{8}\) converts to the OpenCV HSV values of \(H = \big(\frac{60^{\circ}}{360^{\circ}} \cdot 180 - 1\big) = 29, S = \big(\frac{1}{4} \cdot 256 - 1\big) = 63, V = \big(\frac{5}{8} \cdot 256 - 1\big) = 159\)</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <b>Implementing proportional control to enable the robot to follow the yellow line.</b> This will involve:
+            <ul>
+              <li>Setting up a ROS2 publisher to control the movement of the robot.</li>
+              <li>Computing an "error" term (the difference between the goal and the sensed reality). This most important part here is defining the "goal" and the "reality" comparison.</li>
+              <li>Using the error term to determine how the robot moves in accordance with the principles of proportional control.</li>
+            </ul>
+          </li>
+        </ol>
+      </p>
+
+      <p>To run your code:</p>
+
+      <pre><code class="Bash">$ ros2 run iml_buche line_follower_mode</code></pre>
+
+      <p>
+        Once you've successfully implemented your proportional control line follower, it should look something like the following: 
+      </p>
+
+
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10 explanatory-img">
+          <img src="img/line_follower_demo.gif" class="img-responsive" alt="line follower demo">
+        </div>
+        <div class="col-md-1">
+        </div>
+      </div>
+
+
+      <br/>
+ 
+
+    </div><!-- /.centered-body -->
+
+    <!-- footer -->
+    <div class="footer">
+      <div class="centered-body">
+        <div class="row footer-sebo-copyright">
+              &#169;  Cedric Buche
+        </div>
+      </div>
+    </div>
+    
+  </body>
+</html>

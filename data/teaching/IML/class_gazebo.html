@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>IML - Robotics</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="img/Turtlebot_waffle_arm_favicon.png">
+
+    <!-- highlightjs -->
+    <link rel="stylesheet" href="./css/atom-one-dark.min.css">
+    <script src="./css/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- My CSS -->
+    <link href="css/intro_robo.css" rel="stylesheet">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+
+    <!--Navigation bar-->
+    <div id="nav-placeholder"></div>
+    <script>
+    $(function(){
+      $("#nav-placeholder").load("navbar.html");
+    });
+    </script>
+    <!--end of Navigation bar-->
+
+    <div class="centered-body">
+
+      <center>
+        <h1>Lesson: Turtlebot Programming</h1>
+      </center>
+
+      <br/>
+
+      <h2>Today's Lesson</h2>
+      <hr/>
+
+      <ul>
+        <li>You'll keep your Turtlebot from running into walls and figure out how to have Turtlebot spin in circles (<a href="#exo1">Exercice #1</a>).</li>
+        <li>Using Gazebo simulator, Turtlebot will move forward and stop before colliding the wall (<a href="#exo2">Exercice #2</a>).</li>
+        <li>Here's a link to the <b><a href="solutions/class_meeting_02_sample_solutions.html">sample solutions</a></b> for the coding exercises.</li>
+      </ul>
+
+
+      <br/>
+      <h2 id="exo1">Coding Exercise #1: Turtlebot Spinning in Circles</h2>
+      <hr/>
+
+      <p>
+        Your goal in this exercise is to program your Turtlebot to perpetually spin in a circle.<br>
+      </p>
+
+
+      <p>
+        Let's first create a new ROS2 package.
+      </p>
+      <p>
+        Within the package, create a python file called <code>spin_in_circles.py</code>. 
+      </p>
+
+      <p>
+        You can see all of the components of the Turtlebot highlighted in the figure below.
+      </p>
+
+      <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8 explanatory-img">
+          <img src="https://www.generationrobots.com/img/products/robotis/turtlebot3-main-components.jpg" class="img-responsive" alt="Turtlebot">
+        </div>
+        <div class="col-md-2">
+        </div>
+      </div>
+
+      <p>
+        In order to program the robot to spin in circles, you'll want to be controlling the two motors that are connected to the robot's two wheels. The relevant ROS2 topic you'll find useful is:
+        <ul>
+          <li><b>cmd_vel</b> - When you publish to this topic, you'll set the robot's velocity. The <code>linear.x</code> direction sets forward velocity and <code>angular.z</code> sets angular velocity.</li>
+        </ul>
+      </p>
+
+      <div class="callout">
+        <span class="callout-text-title">Note: </span>
+        Here are some commands you might find useful: 
+        <ul>
+           <li><kbd>ros2 topic list</kbd></li>
+          <li><kbd>ros2 topic info <i>topic-name</i></kbd></li>
+          <li><kbd>ros2 topic echo <i>topic-name</i></kbd></li>
+          <li><kbd>ros2 topic pub <i>topic-name msg_type args</i></kbd></li>
+          <li><kbd> ros2 interface show info <i>topic-name</i></kbd></li>
+        </ul>
+      </div>
+
+      <p>
+        In one terminal, run:
+      </p>
+
+      <pre><code class="Bash">$ ros2 run turtlesim turtlesim_node</code></pre>
+
+     <p>
+          <img src="img/turtlesim.jpg" class="img-responsive" alt="Turtlebot" width="300" height="300">
+</p>
+      
+      Topics listing
+      <pre><code class="Bash">$ ros2 topic list</code></pre>
+      
+      Topics type in brackets
+      <pre><code class="Bash">$ ros2 topic list -t</code></pre>
+      
+      
+      <pre><code class="Bash">$ ros2 topic info /turtle1/cmd_vel</code></pre>
+      
+      Structure of data the message expects
+      <pre><code class="Bash">$ ros2 interface show geometry_msgs/msg/Twist</code></pre>
+
+      
+      To see the data being published on a topic, use:
+      <pre><code class="Bash">$ ros2 topic echo /turtle1/cmd_vel</code></pre>
+      
+      At first, this command won’t return any data.<br>
+      Publishing using command line :
+      <pre><code class="Bash">$ ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}"</code></pre>
+
+      
+      <p>
+          <img src="img/turtlesimAfterPu.jpg" class="img-responsive" alt="Turtlebot" width="300" height="300">
+        </p>
+      
+      Now publish using <code>spin_in_circles.py</code>
+
+
+      <p>
+        Once you finish, your robot should behave somewhat similar to what is pictured below:
+      </p>
+
+      <p>
+          <img src="img/turtleSpin.gif" class="img-responsive" alt="Turtlebot Spin Circles" width="300" height="300">
+        </p>
+
+      
+      
+<br>
+      <hr>
+        <h2>Gazebo Simulator</h2>
+        <hr/>
+
+      <p>A robot simulator allows one to interact with a robot and its environment virtually without requiring a real robot. Robot simulators often provide the following functionality,
+
+      <ul>
+         <li> ability to modify the physical layout of the robot's environment (e.g. adding a wall or moving a person around),</li>
+         <li> choice of a robot model (which impacts the availability of sensors, actuators, mass, etc.),  </li>
+         <li> simulated sensor data (i.e. what would the selected robot model observe if it were the real world),</li>
+         <li> means to execute motor commands,</li>
+         <li> visualization of the simulation state.</li>
+      </ul>
+      </p>
+
+
+      <h3> Starting the Simulator</h3>
+      <hr/>
+
+       Lunch Gazebo with ROS using <a href="./files/gazebo_ros_demo.world"><code>gazebo_ros_demo.world</code> </a>
+            <br>
+            <p><pre><code class="Bash" style="padding:0em;">$ gazebo --verbose gazebo_ros_demo.world</code></pre></p>
+        
+    
+
+      <h3>Using RViz with the Simulator</h3>
+      <hr/>
+      <p>To launch an instance of RViz, run the following command.
+      <p><pre><code class="Bash" style="padding:0em;">$ rviz2</code></pre></p>
+ 
+
+ 
+ <div class="callout">
+   <span class="callout-text-title">Note: </span>
+   <h4>RViz vs Gazebo</h4>
+   <p>While both RViz and Gazebo are graphical user interfaces that seem somewhat similar, their nature is quite different. Gazebo is a simulator. It places robots in a virtual world and allows users to give it commands and generates simulated sensor data. This sensor data is not very human friendly (e.g. some numbers and binaries). RViz simply visualizes this generated sensor data so that human users can understand what their robot <i>observes</i> in human terms.</p>
+ </div>
+
+
+      <h3>Topics</h3>
+      <hr/>
+
+      <p>Note that like any other ROS2 node, the robot simulator publishes and subscribe to topics.
+      </p>
+
+      <h5> <code>/demo/cmd_demo</code> </h5>
+      <p> When you publish to this topic, you'll set the robot's velocity. The <code>linear.x</code> direction sets forward velocity and <code>angular.z</code> sets angular velocity.</p>
+
+      <h5> <code>/scan</code> </h5>
+      <p> The robot's LiDAR publishes measurements to this topic. LiDAR is used for measuring distance via lasers. The laser scan message consists of a number of attributes,
+      </p>
+
+      <pre><code class="Plaintext">
+$ ros2 interface show sensor_msgs/msg/LaserScan
+     </code></pre>
+     <p> For initial purposes, the most important one is ranges, a list of 360 numbers where each number corresponds to the distance to the closest obstacle from the LiDAR at various angles. Each measurement is 1 degree apart. The first entry in the array corresponds to what is in front of the robot.
+      </p>
+
+
+
+      <br/>
+      <h2 id="exo2">Coding Exercise #2: Vehicule Stopping in Front of a Wall</h2>
+      <hr/>
+
+
+      <p>
+      Gazebo integrated the physics engine, rendering, and support code for sensor simulation and actuator control.
+      </p>
+
+
+      <p>
+        Next, launch Gazebo with the Turtlebot robot. In one terminal, run:
+      </p>
+
+      <pre><code class="Bash">$ gazebo --verbose gazebo_ros_demo.world</code></pre>
+
+      <p>
+        In a second terminal, run:
+      </p>
+
+      <pre><code class="Bash">$ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1</code></pre>
+
+      <p>
+        In Gazebo, you should see a Turtlebot robot some distance apart from a brick wall.
+      </p>
+
+
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10 explanatory-img">
+          <img src="./img/robot_and_wall.png" class="img-responsive" alt="Turtlebot">
+        </div>
+        <div class="col-md-1">
+        </div>
+      </div>
+
+      <p>
+        <b>Your objective in this exercise is to move the robot forward and stop it just before it would collide with the wall.</b> This will require using the laser scan data from the robot's LiDAR to make decisions about how to control the motors driving the two wheels of the robot.
+      </p>
+
+   
+
+      <p>
+        Write your python ROS2 node in <code>stop_at_wall.py</code>
+      </p>
+
+
+
+
+      <br/>
+
+    </div><!-- /.centered-body -->
+
+    <!-- footer -->
+    <div class="footer">
+      <div class="centered-body">
+        <div class="row footer-sebo-copyright">
+              &#169;  Cedric Buche
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

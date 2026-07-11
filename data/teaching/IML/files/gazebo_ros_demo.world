@@ -1,0 +1,478 @@
+<?xml version="1.0"?>
+<!--
+  Gazebo ROS differential drive plugin demo
+
+  Try sending commands:
+
+    ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
+
+    ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{angular: {z: 0.1}}' -1
+
+  Try listening to odometry:
+
+    ros2 topic echo /demo/odom_demo
+
+  Try listening to TF:
+
+    ros2 run tf2_ros tf2_echo odom_demo chassis
+
+    ros2 run tf2_ros tf2_echo chassis right_wheel
+
+    ros2 run tf2_ros tf2_echo chassis left_wheel
+-->
+<sdf version="1.6">
+  <world name="default">
+
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <model name='vehicle'>
+      <pose>0 0 0.325 0 -0 0</pose>
+
+      <link name='chassis'>
+        <pose>-0.151427 -0 0.175 0 -0 0</pose>
+        <inertial>
+          <mass>1.14395</mass>
+          <inertia>
+            <ixx>0.126164</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.416519</iyy>
+            <iyz>0</iyz>
+            <izz>0.481014</izz>
+          </inertia>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>2.01142 1 0.568726</size>
+            </box>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>2.01142 1 0.568726</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+
+      <link name='left_wheel'>
+        <pose>0.554283 0.625029 -0.025 -1.5707 0 0</pose>
+        <inertial>
+          <mass>2</mass>
+          <inertia>
+            <ixx>0.145833</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.145833</iyy>
+            <iyz>0</iyz>
+            <izz>0.125</izz>
+          </inertia>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <sphere>
+              <radius>0.3</radius>
+            </sphere>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <sphere>
+              <radius>0.3</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+                <slip1>0</slip1>
+                <slip2>0</slip2>
+              </ode>
+            </friction>
+            <contact>
+              <ode>
+                <soft_cfm>0</soft_cfm>
+                <soft_erp>0.2</soft_erp>
+                <kp>1e+13</kp>
+                <kd>1</kd>
+                <max_vel>0.01</max_vel>
+                <min_depth>0.01</min_depth>
+              </ode>
+            </contact>
+          </surface>
+        </collision>
+      </link>
+
+      <link name='right_wheel'>
+        <pose>0.554282 -0.625029 -0.025 -1.5707 0 0</pose>
+        <inertial>
+          <mass>2</mass>
+          <inertia>
+            <ixx>0.145833</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.145833</iyy>
+            <iyz>0</iyz>
+            <izz>0.125</izz>
+          </inertia>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <sphere>
+              <radius>0.3</radius>
+            </sphere>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <sphere>
+              <radius>0.3</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+                <slip1>0</slip1>
+                <slip2>0</slip2>
+              </ode>
+            </friction>
+            <contact>
+              <ode>
+                <soft_cfm>0</soft_cfm>
+                <soft_erp>0.2</soft_erp>
+                <kp>1e+13</kp>
+                <kd>1</kd>
+                <max_vel>0.01</max_vel>
+                <min_depth>0.01</min_depth>
+              </ode>
+            </contact>
+          </surface>
+        </collision>
+      </link>
+
+      <link name='caster'>
+        <pose>-0.957138 -0 -0.125 0 -0 0</pose>
+        <inertial>
+          <mass>1</mass>
+          <inertia>
+            <ixx>0.1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.1</iyy>
+            <iyz>0</iyz>
+            <izz>0.1</izz>
+          </inertia>
+        </inertial>
+        <visual name='visual'>
+          <geometry>
+            <sphere>
+              <radius>0.2</radius>
+            </sphere>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <sphere>
+              <radius>0.2</radius>
+            </sphere>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name='left_wheel_joint' type='revolute'>
+        <parent>chassis</parent>
+        <child>left_wheel</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1.79769e+308</lower>
+            <upper>1.79769e+308</upper>
+          </limit>
+        </axis>
+      </joint>
+
+      <joint name='right_wheel_joint' type='revolute'>
+        <parent>chassis</parent>
+        <child>right_wheel</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-1.79769e+308</lower>
+            <upper>1.79769e+308</upper>
+          </limit>
+        </axis>
+      </joint>
+
+      <joint name='caster_wheel' type='ball'>
+        <parent>chassis</parent>
+        <child>caster</child>
+      </joint>
+
+      <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
+
+        <ros>
+          <namespace>/demo</namespace>
+          <remapping>cmd_vel:=cmd_demo</remapping>
+          <remapping>odom:=odom_demo</remapping>
+        </ros>
+
+        <!-- wheels -->
+        <left_joint>left_wheel_joint</left_joint>
+        <right_joint>right_wheel_joint</right_joint>
+
+        <!-- kinematics -->
+        <wheel_separation>1.25</wheel_separation>
+        <wheel_diameter>0.6</wheel_diameter>
+
+        <!-- limits -->
+        <max_wheel_torque>20</max_wheel_torque>
+        <max_wheel_acceleration>1.0</max_wheel_acceleration>
+
+        <!-- output -->
+        <publish_odom>true</publish_odom>
+        <publish_odom_tf>true</publish_odom_tf>
+        <publish_wheel_tf>true</publish_wheel_tf>
+
+        <odometry_frame>odom_demo</odometry_frame>
+        <robot_base_frame>chassis</robot_base_frame>
+
+      </plugin>
+      
+      
+  <!-- ****************************** LIDAR *****************************    -->
+  <link name="lidar_link">    
+    <inertial>
+      <pose>0.215 0 0.13 0 0 0</pose>
+      <inertia>
+        <ixx>0.001</ixx>
+        <ixy>0.000</ixy>
+        <ixz>0.000</ixz>
+        <iyy>0.001</iyy>
+        <iyz>0.000</iyz>
+        <izz>0.001</izz>
+      </inertia>
+      <mass>0.114</mass>
+    </inertial>
+
+    <collision name="lidar_collision">
+      <pose>0.215 0 0.13 0 0 0</pose>
+      <geometry>
+        <cylinder>
+          <radius>0.0508</radius>
+          <length>0.18</length>
+        </cylinder>
+      </geometry>
+    </collision>
+
+    <visual name="lidar_visual">
+      <pose>0.215 0 0.13 0 0 0</pose>
+      <geometry>
+        <cylinder>
+          <radius>0.0508</radius>
+          <length>0.18</length>
+        </cylinder>
+      </geometry>
+      <material>
+        <ambient>0.0 0.0 0.0 1.0</ambient>
+        <diffuse>0.0 0.0 0.0 1.0</diffuse>
+        <specular>0.0 0.0 0.0 1.0</specular>
+        <emissive>0.0 0.0 0.0 1.0</emissive>
+      </material>
+    </visual>
+
+    <sensor name="lidar" type="ray">
+      <pose>0.215 0 0.5 0 0 0</pose>
+      <always_on>true</always_on>
+      <visualize>true</visualize>
+      <update_rate>5</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1.00000</resolution>
+            <min_angle>0.000000</min_angle>
+            <max_angle>6.280000</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.120000</min>
+          <max>3.5</max>
+          <resolution>0.015000</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="scan" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <remapping>~/out:=scan</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+        <frame_name>lidar_link</frame_name>
+      </plugin>
+    </sensor>
+  </link>
+  
+  
+  
+  <joint name="lidar_joint" type="fixed">
+    <parent>chassis</parent>
+    <child>lidar_link</child>
+    <pose>0 0 0 0 0 0</pose>
+  </joint>
+  
+  
+      <!-- wall -->
+      
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <contact>
+              <collide_bitmask>65535</collide_bitmask>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <physics type='ode'>
+      <real_time_update_rate>1000</real_time_update_rate>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <ode>
+        <solver>
+          <type>quick</type>
+          <iters>150</iters>
+          <precon_iters>0</precon_iters>
+          <sor>1.4</sor>
+          <use_dynamic_moi_rescaling>1</use_dynamic_moi_rescaling>
+        </solver>
+        <constraints>
+          <cfm>1e-05</cfm>
+          <erp>0.2</erp>
+          <contact_max_correcting_vel>2000</contact_max_correcting_vel>
+          <contact_surface_layer>0.01</contact_surface_layer>
+        </constraints>
+      </ode>
+    </physics>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <wind/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <model name='wall_to_not_run_into'>
+      <pose>0.869051 0.031728 0 0 -0 0</pose>
+      <link name='Wall_8'>
+        <collision name='Wall_8_Collision'>
+          <geometry>
+            <box>
+              <size>6 0.15 2.5</size>
+            </box>
+          </geometry>
+          <pose>0 0 1.25 0 -0 0</pose>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='Wall_8_Visual'>
+          <pose>0 0 1.25 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>6 0.15 2.5</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Bricks</name>
+            </script>
+            <ambient>1 1 1 1</ambient>
+          </material>
+          <meta>
+            <layer>0</layer>
+          </meta>
+        </visual>
+        <pose>8 0 0 0 -0 -1.5708</pose>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+
+    </model>
+    
+    
+    
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>-7.8146 -18.4908 6.30937 -0 0.267643 1.22019</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+
+  </world>
+</sdf>

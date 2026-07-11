@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>IML - Robotics</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="img/turtlebot3_waffle_arm_favicon.png">
+
+    <!-- highlightjs -->
+    <link rel="stylesheet" href="../css/atom-one-dark.min.css">
+    <script src="../css/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- My CSS -->
+    <link href="../css/intro_robo.css" rel="stylesheet">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+
+    <!--Navigation bar-->
+    <div id="nav-placeholder"></div>
+    <script>
+    $(function(){
+      $("#nav-placeholder").load("navbar.html");
+    });
+    </script>
+    <!--end of Navigation bar-->
+
+    <div class="centered-body">
+
+      <center>
+        <h1>Solutions</h1>
+      </center>
+
+
+      <br/>
+      <h3><code>line_follower.py</code></h3>
+
+      <pre><code class="Python">#!/usr/bin/env python3
+
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+
+# msgs needed for /cmd_vel
+from geometry_msgs.msg import Twist, Vector3
+
+from sensor_msgs.msg import Image
+
+import numpy as np
+import cv2
+import cv_bridge
+
+class Follower(Node):
+
+    def __init__(self):
+        super().__init__('line_follower')
+        
+        # Create a bridge between ROS and OpenCV
+        self.bridge = cv_bridge.CvBridge()
+        
+        
+        # initalize the debugging window
+        cv2.namedWindow("window", 1)
+        
+        
+        # Create a default twist msg (all values 0).
+        lin = Vector3()
+        ang = Vector3()
+        self.twist = Twist(linear=lin,angular=ang)
+        
+        
+        # Publish msg to cmd_vel.
+        self.cmd_vel_pub = self.create_publisher(
+                Twist,      # message type
+                '/cmd_vel',  # topic name
+                10)          # history depth
+        
+        self.image_sub = self.create_subscription(
+                Image,
+                'camera1/image_raw',
+                self.image_callback,  # function to run upon message arrival
+                10)  # allows packet loss
+
+
+
+    def image_callback(self,data):
+        
+        # converts the incoming ROS message to cv2 format and HSV (hue, saturation, value)
+        image = self.bridge.imgmsg_to_cv2(data,desired_encoding='bgr8')
+        hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+
+        # TODO: define the upper and lower bounds for what should be considered 'yellow'
+        lower_yellow = np.array([ 10, 10, 10])
+        upper_yellow = np.array([255, 255, 250])
+        mask = cv2.inRange(hsv, lower_yellow, upper_yellow)
+
+        # we now erase all pixels that aren't yellow
+        h, w, d = image.shape
+        search_top = int(3*h/4)
+        search_bot = int(3*h/4 + 20)
+        mask[0:search_top, 0:w] = 0
+        mask[search_bot:h, 0:w] = 0
+
+        # using moments() function, determine the center of the yellow pixels
+        M = cv2.moments(mask)
+        # if there are any yellow pixels found
+        if M['m00'] > 0:
+                # determine the center of the yellow pixels in the image
+                cx = int(M['m10']/M['m00'])
+                cy = int(M['m01']/M['m00'])
+
+                # visualize a red circle in our debugging window to indicate
+                # the center point of the yellow pixels
+                cv2.circle(image, (cx, cy), 20, (0,0,255), -1)
+
+                # TODO: based on the location of the line (approximated
+                #       by the center of the yellow pixels), implement
+                #       proportional control to have the robot follow
+                #       the yellow line
+                err = w/2 - cx
+                k_p = 1.0 / 100.0
+                self.twist.linear.x = 0.2
+                self.twist.angular.z = k_p * err
+                self.cmd_vel_pub.publish(self.twist)
+
+        # show the debugging window
+        cv2.imshow("window", image)
+        cv2.waitKey(3)
+            
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    pc_publisher = Follower()
+    rclpy.spin(pc_publisher)
+    pc_publisher.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()</code></pre>
+
+
+
+
+      <br/>
+
+    </div><!-- /.centered-body -->
+
+    <!-- footer -->
+    <div class="footer">
+      <div class="centered-body">
+        <div class="row footer-sebo-copyright">
+              &#169;  Cedric Buche
+        </div>
+      </div>
+    </div>
+    
+  </body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>IML - Robotics</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="img/turtlebot3_waffle_arm_favicon.png">
+
+    <!-- highlightjs -->
+    <link rel="stylesheet" href="./css/atom-one-dark.min.css">
+    <script src="./css/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- My CSS -->
+    <link href="css/intro_robo.css" rel="stylesheet">
+
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+
+
+    <div class="centered-body">
+
+      <center>
+        <h1>Lab: Introduction to ROS2 </h1>
+      </center>
+
+      <br/>
+      <h2>Today's Lesson</h2>
+      <hr/>
+
+
+      
+      Practice :
+          <ul>
+              <li> <a href="#pkg"> Create a package </a></li>
+              <li>  <a href="#node"> Create a node </a></li>
+              <li>  <a href="#manipulateNode"> Manipulate node </a></li>
+              <li>  <a href="#anotherNode"> Create another node </a></li>
+              <li>  <a href="#Publisher/Receiver"> Publisher/Receiver </a></li>
+          </ul>
+      
+      <br/>
+
+    
+
+    <hr>
+    <h2 id=href="pkg">Create a package</h2>
+    <hr>
+    A package is a container for your ROS 2 code.
+    <pre><code class="Bash">
+      $  mkdir -p ros2_ws/src
+      $  cd ros2_ws/src
+      $  ros2 pkg create --build-type ament_python iml_buche_test
+    </code></pre>
+    
+  
+    <hr>
+    <h2 id="node">Create a node</h2>
+    <hr>
+    
+    Create <code>start.py</code> and place it in <kbd>ros2_ws/src/iml_buche_test/iml_buche_test/</kbd>
+    <h3><code>start.py</code></h3>
+
+    <pre><code class="Python">        import rclpy
+        from rclpy.node import Node
+
+        def main(args=None):
+
+            # initialize ROS communications
+            rclpy.init(args=args)
+            
+            # create the node
+            node = Node('start_node')
+            
+            # start ROS2 publishers, subscribers, services, get parameters, etc
+            rclpy.spin(node)
+            
+            # When you request to kill the node
+            rclpy.shutdown()
+            
+        if __name__ == '__main__':
+            main()</code></pre>
+    
+    Add an entry point in the <code>setup.py</code>
+    <h3><code>setup.py</code></h3>
+    <pre><code class="Python">
+    #...
+    entry_points={
+        'console_scripts': [
+            'test_python_node = iml_buche_test.start:main'
+        ],
+    ...</code></pre>
+    
+    <div class="callout">
+      <span class="callout-text-title">Note: </span>
+      
+      <li> <kbd>test_python_node</kbd>  will be the name of the executable,</li>
+      <li> <kbd>start</kbd>  is the name of the Python file
+          <li> <kbd>my_node_name</kbd>  is the name of the node (written in the Python file).
+    </div>
+    
+    
+    <h3><code>package.xml</code></h3>
+    Add <kbd>rclpy</kbd> dependency
+    <xmp>
+    <build_type>ament_python</build_type>
+    ...
+    <depend>rclpy</depend>
+    </xmp>
+
+
+    
+    <pre><code class="Bash">
+     # Compile your package
+  $ cd ros2_ws
+  $ colcon build
+
+    # source your ROS2 workspace
+   $ . install/setup.bash
+
+    # run
+   $ ros2 run iml_buche_test test_python_node
+    </code></pre>
+    
+    
+    
+    <hr>
+ <h2 id="manipulateNode">Manipulate node</h2>
+ <hr>
+    <pre><code class="Bash">
+    # change the node’s name from “my_node” to “another_node”
+   $ ros2 run iml_buche_test test_python_node  --ros-args -r __node:=another_node
+
+    # dans un autre terminal
+   $ . install/setup.bash # source
+   $ ros2 run iml_buche_test test_python_node
+
+    # it could be nice to be able to see what’s going on
+   $ ros2 node list
+
+    # Get more details about a Node
+   $ ros2 node info /another_node
+    </code></pre>
+
+    
+    
+    <h2 id="anotherNode">Create another node</h2>
+    Create <code>anotherNode.py</code> and place it in <kbd>ros2_ws/src/iml_buche_test/iml_buche_test/</kbd>
+    <h3>
+    <code>anotherNode.py</code>
+    </h3>
+       <pre><code class="Python"># ROS2 Python library
+           import rclpy
+           from rclpy.node import Node
+
+           class MyNode2(Node):
+               def __init__(self):
+                   super().__init__('my_node_name_another')
+                   self.create_timer(0.2, self.timer_callback)
+                   
+               def timer_callback(self):
+                   self.get_logger().info("Coucou -- Hello ROS2 -- this is IML ")
+
+           def main(args=None):
+               rclpy.init(args=args)
+               
+               node = MyNode2()
+               
+               rclpy.spin(node)
+               rclpy.shutdown()
+               
+           if __name__ == '__main__':
+               main()
+       </code></pre>
+    
+    Do not forget to add another entry point in <code>setup.py</code>
+    <pre><code class="Python">
+    #...
+    entry_points={
+        'console_scripts': [
+            'test_python_node = iml_buche_test.start:main',
+            'test_python_another_node = iml_buche_test.anotherNode:main'
+        ],
+    ...</code></pre>
+    Compile :
+    <pre><code class="Bash">
+     $   colcon build
+    </code></pre>
+    
+    In one terminal :
+       <pre><code class="Bash">
+          $ . install/setup.bash
+          $ ros2 run iml_buche_test test_python_node
+       </code></pre>
+       In another terminal :
+          <pre><code class="Bash">
+             $ . install/setup.bash
+             $ ros2 run iml_buche_test test_python_another_node
+          </code></pre>
+    
+    
+    <hr>
+    <h2 id="Publisher/Receiver">Publisher/Receiver</h2>
+    
+    <hr>
+    Create a new package in the workspace
+    
+       <pre><code class="Bash">
+           $  cd ./ros2_ws/src
+    $  ros2 pkg create --build-type ament_python iml_buche_test_2
+       </code></pre>
+    
+    <code>publisher.py</code>
+    <pre><code class="Python">
+        import rclpy
+        from rclpy.node import Node
+
+        from std_msgs.msg import String
+
+
+        class MinimalPublisher(Node):
+
+            def __init__(self):
+                super().__init__('minimal_publisher')
+                self.publisher_ = self.create_publisher(String, 'iml_topic', 10)
+                timer_period = 0.5  # seconds
+                self.timer = self.create_timer(timer_period, self.timer_callback)
+                self.i = 0
+
+            def timer_callback(self):
+                msg = String()
+                msg.data = 'Hello World: %d' % self.i
+                self.publisher_.publish(msg)
+                self.get_logger().info('Publishing: "%s"' % msg.data)
+                self.i += 1
+
+
+        def main(args=None):
+            rclpy.init(args=args)
+
+            minimal_publisher = MinimalPublisher()
+
+            rclpy.spin(minimal_publisher)
+
+
+            rclpy.shutdown()
+
+
+        if __name__ == '__main__':
+            main()
+    </code></pre>
+    
+    
+    <code>receiver.py</code>
+    <pre><code class="Python">
+        import rclpy
+        from rclpy.node import Node
+
+        from std_msgs.msg import String
+
+
+        class MinimalSubscriber(Node):
+
+            def __init__(self):
+                super().__init__('minimal_subscriber')
+                self.subscription = self.create_subscription(
+                    String,
+                    'iml_topic',
+                    self.listener_callback,
+                    10)
+                self.subscription  # prevent unused variable warning
+
+            def listener_callback(self, msg):
+                self.get_logger().info('I heard: "%s"' % msg.data)
+
+
+        def main(args=None):
+            rclpy.init(args=args)
+
+            minimal_subscriber = MinimalSubscriber()
+
+            rclpy.spin(minimal_subscriber)
+            rclpy.shutdown()
+
+        if __name__ == '__main__':
+            main()
+    </code></pre>
+    
+    
+    While running, you can display the graph
+       <pre><code class="Bash">
+          $ rqt_graph
+       </code></pre>
+    
+    
+    
+    
+    </div><!-- /.centered-body -->
+
+    <!-- footer -->
+    <div class="footer">
+      <div class="centered-body">
+        <div class="row footer-sebo-copyright">
+              &#169; Cedric Buche
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
