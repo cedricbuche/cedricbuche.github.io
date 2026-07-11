@@ -91,5 +91,21 @@
   </main>
 </div>
 <script src="assets/main.js"></script>
+<script>
+(function () {
+  // Adds an automatic "(N)" student count to each supervision section title.
+  // Counts every .sup-group element that sits between one <h2> and the next,
+  // so adding/removing a supervision entry updates the count automatically.
+  document.querySelectorAll('main h2').forEach(function (h2) {
+    var count = 0;
+    var el = h2.nextElementSibling;
+    while (el && el.tagName !== 'H2') {
+      if (el.classList.contains('sup-group')) count++;
+      el = el.nextElementSibling;
+    }
+    h2.textContent = h2.textContent.replace(/\s*\(\d+\)\s*$/, '') + ' (' + count + ')';
+  });
+})();
+</script>
 </body>
 </html>
