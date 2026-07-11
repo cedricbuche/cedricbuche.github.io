@@ -73,6 +73,12 @@
     });
   }
  
+  function highlightAuthor(s) {
+    var escaped = esc(s);
+    // souligne "C. Buche" (variantes d'espace/casse incluses)
+    return escaped.replace(/C\.\s?Buche/gi, '<u>$&</u>');
+  }
+ 
   function isTop(p) {
     return (p.b || []).some(function (b) {
       return b === 'Q1' || b === 'rank A' || b === 'rank A*';
@@ -93,7 +99,7 @@
         + '<div class="yr">' + p.y + '</div>'
         + '<div>'
           + '<div class="ti">' + esc(p.t) + '</div>'
-          + '<div class="au">' + esc(p.a) + '</div>'
+          + '<div class="au">' + highlightAuthor(p.a) + '</div>'
           + '<div class="ve">' + esc(p.v) + '</div>'
           + (badges ? '<div class="badges">' + badges + '</div>' : '')
           + link
