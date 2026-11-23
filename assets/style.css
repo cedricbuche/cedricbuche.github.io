@@ -181,7 +181,8 @@ main{ flex:1; min-width:0; }
 table{ width:100%; border-collapse:collapse; margin:1rem 0 2rem; font-size:.92rem; }
 th{ text-align:left; font-family:var(--mono); font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); border-bottom:1px solid var(--ink); padding:.5rem .6rem; }
 td{ border-bottom:1px solid var(--line); padding:.6rem .6rem; vertical-align:top; }
-td .yr{ font-family:var(--mono); color:var(--teal-deep); white-space:nowrap; }
+td.yr{ font-family:var(--mono); color:var(--teal-deep); white-space:nowrap; }
+@media (max-width:700px){ table{ display:block; overflow-x:auto; } }
 
 /* supervision list */
 .sup-group{ margin-bottom:.9rem; padding:.9rem 0; border-bottom:1px dashed var(--line); }
