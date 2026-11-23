@@ -5,6 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RoboBreizh — Cédric Buche</title>
 <link rel="stylesheet" href="assets/style.css">
+<style>
+  .rb-figure{ margin:1.8rem 0 2.2rem; }
+  .rb-figure img{ width:100%; height:auto; display:block; border:1px solid var(--line); border-radius:var(--radius); }
+  .rb-figure figcaption{ font-family:var(--mono); font-size:.74rem; color:var(--ink-soft); margin-top:.5rem; }
+
+  .rb-stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);
+    border:1px solid var(--line); border-radius:var(--radius); margin:0 0 2.6rem; }
+  .rb-stat{ background:var(--paper); padding:1rem 1.1rem; }
+  .rb-stat .num{ font-family:var(--display); font-size:1.9rem; font-weight:600; color:var(--teal-deep); line-height:1.1; }
+  .rb-stat .lbl{ font-family:var(--mono); font-size:.72rem; color:var(--ink-soft); margin-top:.3rem; }
+  @media (max-width:700px){ .rb-stats{ grid-template-columns:1fr 1fr; } }
+
+  .rb-timeline{ list-style:none; padding:0; margin:0 0 1.6rem; border-left:2px solid var(--line); }
+  .rb-timeline li{ position:relative; padding:0 0 1.3rem 1.4rem; }
+  .rb-timeline li::before{ content:""; position:absolute; left:-7px; top:.35rem; width:12px; height:12px;
+    border-radius:50%; background:var(--paper); border:2px solid var(--teal-deep); }
+  .rb-timeline li.gold::before{ background:var(--amber); border-color:var(--amber); }
+  .rb-timeline .yr{ font-family:var(--mono); font-size:.78rem; color:var(--teal-deep); font-weight:600; }
+  .rb-timeline .what{ font-family:var(--display); font-weight:600; font-size:1.08rem; color:var(--ink); }
+  .rb-timeline .where{ color:var(--ink-soft); font-size:.92rem; }
+
+  .rb-awards{ display:grid; grid-template-columns:repeat(4,1fr); gap:.8rem; margin:.4rem 0 2.6rem; }
+  .rb-awards a{ display:block; border:1px solid var(--line); border-radius:var(--radius); background:#fff; overflow:hidden; }
+  .rb-awards img{ width:100%; aspect-ratio:1.414; object-fit:cover; display:block; transition:transform .25s; }
+  .rb-awards a:hover img{ transform:scale(1.04); }
+  @media (max-width:700px){ .rb-awards{ grid-template-columns:1fr 1fr; } }
+
+  .rb-split{ display:grid; grid-template-columns:1.1fr 1fr; gap:1.6rem; align-items:center; margin-bottom:2.4rem; }
+  .rb-split img{ width:100%; height:auto; display:block; border:1px solid var(--line); border-radius:var(--radius); }
+  @media (max-width:700px){ .rb-split{ grid-template-columns:1fr; } }
+
+  .rb-press{ list-style:none; padding:0; margin:0 0 2.4rem; }
+  .rb-press li{ display:flex; gap:1rem; padding:.7rem 0; border-top:1px solid var(--line); align-items:baseline; }
+  .rb-press li:last-child{ border-bottom:1px solid var(--line); }
+  .rb-press .src{ font-family:var(--mono); font-size:.75rem; color:var(--teal-deep); min-width:9.5rem; }
+
+  .rb-cta{ display:flex; flex-wrap:wrap; gap:.7rem; margin-top:1rem; }
+</style>
 </head>
 <body>
 <div class="topbar">
@@ -12,15 +50,91 @@
   <button class="nav-toggle" aria-expanded="false">Menu ☰</button>
 </div>
 <div class="shell">
-  
+
 <nav id="sidebar"></nav>
 
   <main>
     <div class="wrap">
       <p class="eyebrow">Team</p>
       <h1>RoboBreizh</h1>
-      <p style="font-size:1.05rem;">I lead the RoboBreizh team, competing in RoboCup@Home with a fully embedded approach to human-robot interaction, vision and language understanding — champion of the SSPL league in 2022 and 2023.</p>
-      <p><a class="btn" href="https://cedricbuche.github.io/robobreizh/">Visit the RoboBreizh team site ↗</a></p>
+      <p style="font-size:1.05rem;">I founded and lead RoboBreizh, a French–Australian team competing in RoboCup@Home — the largest international competition for autonomous service robots. Our approach is fully embedded human–robot interaction: perception, language understanding and reasoning running on social robots such as Pepper and NAO. RoboBreizh won the Social Standard Platform League world title in 2022 and 2023.</p>
+      <div class="tag-row">
+        <span class="tag">RoboCup@Home</span>
+        <span class="tag">Human–Robot Interaction</span>
+        <span class="tag">Embedded AI</span>
+        <span class="tag">Pepper · NAO</span>
+        <span class="tag">ENIB · Lab-STICC · IRL CROSSING</span>
+      </div>
+
+      <figure class="rb-figure">
+        <img src="data/robobreizh/team.jpg" alt="The RoboBreizh team with a fleet of Pepper and NAO robots" loading="lazy">
+        <figcaption>The RoboBreizh team with its Pepper and NAO robots at ENIB, Brest.</figcaption>
+      </figure>
+
+      <div class="rb-stats">
+        <div class="rb-stat"><div class="num">2×</div><div class="lbl">World champion<br>RoboCup@Home SSPL</div></div>
+        <div class="rb-stat"><div class="num">4</div><div class="lbl">International awards<br>2020 – 2023</div></div>
+        <div class="rb-stat"><div class="num">2019</div><div class="lbl">Team founded<br>at ENIB, Brest</div></div>
+        <div class="rb-stat"><div class="num">FR · AU</div><div class="lbl">ENIB, IRL CNRS CROSSING,<br>Flinders University</div></div>
+      </div>
+
+      <h2>Track record</h2>
+      <ul class="rb-timeline">
+        <li class="gold">
+          <div class="yr">2023</div>
+          <div class="what">World champion — 1st place, RoboCup@Home SSPL</div>
+          <div class="where">RoboCup 2023, Bordeaux, France · ENIB / IRL CNRS CROSSING / Flinders University</div>
+        </li>
+        <li class="gold">
+          <div class="yr">2022</div>
+          <div class="what">World champion — 1st place, RoboCup@Home SSPL</div>
+          <div class="where">RoboCup 2022, Bangkok, Thailand</div>
+        </li>
+        <li>
+          <div class="yr">2021</div>
+          <div class="what">3rd place, RoboCup@Home SSPL</div>
+          <div class="where">RoboCup Worldwide 2021 (virtual competition)</div>
+        </li>
+        <li>
+          <div class="yr">2020</div>
+          <div class="what">Best Performance Award — RoboCup@Home Education Online Challenge</div>
+          <div class="where">Standard Platform, Pepper open category</div>
+        </li>
+      </ul>
+
+      <div class="rb-awards">
+        <a href="data/robobreizh/award_2023.jpg"><img src="data/robobreizh/award_2023.jpg" alt="RoboCup 2023 award certificate, first place" loading="lazy"></a>
+        <a href="data/robobreizh/award_2022.jpg"><img src="data/robobreizh/award_2022.jpg" alt="RoboCup 2022 award certificate, first place" loading="lazy"></a>
+        <a href="data/robobreizh/award_2021.jpg"><img src="data/robobreizh/award_2021.jpg" alt="RoboCup Worldwide 2021 certificate, third place" loading="lazy"></a>
+        <a href="data/robobreizh/award_2020.jpg"><img src="data/robobreizh/award_2020.jpg" alt="RoboCup@Home Education 2020 Best Performance Award" loading="lazy"></a>
+      </div>
+
+      <h2>Research behind the robots</h2>
+      <div class="rb-split">
+        <div>
+          <p>Every RoboCup@Home task — following a person, tidying a room, serving guests — is a test of interaction in a real home. Our architecture combines five ROS modules (perception, navigation, reasoning, movement and interaction) and runs entirely on board the robot.</p>
+          <p>Our contributions include real-time scene-graph generation for robot perception, natural-language understanding for spoken commands, speaker recognition, movement learning from demonstration, and virtual-reality environments to test behaviours safely before deployment.</p>
+        </div>
+        <img src="data/robobreizh/robobreizh.jpg" alt="Team members with Pepper and NAO robots at a RoboCup competition" loading="lazy">
+      </div>
+
+      <h2>A launchpad for careers</h2>
+      <p>RoboBreizh is also a training ground. Former PhD students and engineers of the team now work in humanoid and social robotics at companies such as PAL Robotics and Enchanted Tools, and Maëlic Neau co-founded <strong>Asim</strong>, a humanoid-robot safety start-up selected by Y Combinator in 2026.</p>
+
+      <h2>In the press</h2>
+      <ul class="rb-press">
+        <li><span class="src">Ouest-France · 2026</span><a href="https://cedricbuche.github.io/robobreizh/Press/ouest-france_asim_2026.pdf">A start-up born at ENIB joins Y Combinator</a></li>
+        <li><span class="src">Le Monde · 2023</span><a href="https://www.lemonde.fr/sciences/article/2023/07/10/a-la-robocup-des-robots-dopes-a-l-intelligence-artificielle_6181257_1650684.html">À la RoboCup, des robots dopés à l'intelligence artificielle</a></li>
+        <li><span class="src">M6 Le 19:45 · 2023</span><a href="https://cedricbuche.github.io/robobreizh/Press/M6_journal.mp4">TV report on the team (7 July 2023)</a></li>
+        <li><span class="src">CNRS Le Journal · 2022</span><a href="https://lejournal.cnrs.fr/articles/robocup-2022-une-equipe-de-brest-championne-du-monde">RoboCup 2022 : une équipe de Brest championne du monde</a></li>
+        <li><span class="src">France Inter · 2022</span><a href="https://www.radiofrance.fr/franceinter/un-robot-breton-champion-du-monde-de-la-robocup-1884594">Un robot breton champion du monde de la RoboCup</a></li>
+      </ul>
+
+      <div class="rb-cta">
+        <a class="btn" href="https://cedricbuche.github.io/robobreizh/">Visit the RoboBreizh team site ↗</a>
+        <a class="btn" href="https://cedricbuche.github.io/robobreizh/src/en/links_en.html">All press coverage ↗</a>
+        <a class="btn" href="https://github.com/ROBOBREIZH">Source code on GitHub ↗</a>
+      </div>
     </div>
   </main>
 </div>
