@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   // Load sidebar
-  fetch("sidebar.html")
+  fetch("sidebar.html", { cache: "no-cache" })
     .then(response => {
       if (!response.ok) {
         throw new Error("Cannot load sidebar.html");
