@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sport — Cédric Buche</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="topbar">
+  <span class="nav-name">Cédric Buche</span>
+  <button class="nav-toggle" aria-expanded="false">Menu ☰</button>
+</div>
+<div class="shell">
+
+<nav id="sidebar"></nav>
+
+  <main>
+    <div class="wrap">
+      <p class="eyebrow">Extra · off the clock</p>
+      <h1>Sport</h1>
+      <p>Outside the lab, I race triathlon — from sprint distance to full Ironman — plus some running and duathlon. Below are my race results since 2004.</p>
+
+      <div class="stat-grid">
+        <div class="stat"><span class="stat-val">3</span><span class="stat-lbl">Ironman finishes</span></div>
+        <div class="stat"><span class="stat-val">10h54</span><span class="stat-lbl">Ironman best · Copenhagen 2011</span></div>
+        <div class="stat"><span class="stat-val">4h43</span><span class="stat-lbl">Half-Ironman best · Barcelona 2012</span></div>
+        <div class="stat"><span class="stat-val">3h15</span><span class="stat-lbl">Marathon best · La Rochelle 2009</span></div>
+      </div>
+
+      <h2 style="margin-top:2.2rem;">Personal bests</h2>
+      <table>
+        <thead><tr><th>Distance</th><th>Time</th><th>Race</th></tr></thead>
+        <tbody>
+          <tr><td>Ironman (3.8 / 180 / 42 km)</td><td class="yr">10h54'16</td><td>Copenhagen 2011</td></tr>
+          <tr><td>Half-Ironman (1.9 / 90 / 21 km)</td><td class="yr">4h43'27</td><td>Barcelona 2012</td></tr>
+          <tr><td>Olympic triathlon</td><td class="yr">2h03'25</td><td>Rennes 2008</td></tr>
+          <tr><td>Marathon</td><td class="yr">3h15'40</td><td>La Rochelle 2009</td></tr>
+          <tr><td>Half marathon</td><td class="yr">1h28'04</td><td>Saint-Pol – Morlaix 2009</td></tr>
+          <tr><td>10 km</td><td class="yr">38'13</td><td>Brest 2009</td></tr>
+          <tr><td>5 km (test)</td><td class="yr">17'40</td><td>Brest 2011</td></tr>
+          <tr><td>400 m swim (test)</td><td class="yr">5'41</td><td>Toulon 2011</td></tr>
+        </tbody>
+      </table>
+
+      <h2>All results</h2>
+      <div class="sport-filters" role="group" aria-label="Filter by race type">
+        <button class="active" data-cat="all">All</button>
+        <button data-cat="im">Ironman</button>
+        <button data-cat="half">Half / long distance</button>
+        <button data-cat="olympic">Olympic</button>
+        <button data-cat="sprint">Sprint</button>
+        <button data-cat="du">Duathlon</button>
+        <button data-cat="run">Running &amp; tests</button>
+      </div>
+
+      <div id="results"></div>
+
+      <p class="sport-note">Distances in brackets are swim / bike / run in km. Ranking = overall position / finishers. DNF = did not finish.</p>
+    </div>
+  </main>
+</div>
+
+<script>
+// [year, place, race, category, ranking, time, note]
+var RACES = [
+  [2018,"Lacanau","Half-Ironman (1.9/81/22)","half","247/678","4h56'11"],
+  [2017,"Vichy","Ironman (3.8/180/42)","im","439/1221","11h46'26"],
+  [2017,"Plouescat","Sprint triathlon","sprint","70/300","1h11'55"],
+  [2017,"Quidel","Half-Ironman (1.9/90/21)","half","61/344","5h03'39"],
+  [2016,"Quidel","Half-Ironman (1.9/86/22)","half","70/212","5h09'36"],
+  [2015,"Lacanau","Half-Ironman (1.9/80/21)","half","167/342","4h49'34"],
+  [2015,"Trégastel","Olympic triathlon","olympic","88/321","2h21'16"],
+  [2015,"Luxembourg 🇱🇺","Half-Ironman (1.9/90/21)","half","592/1640","5h08'27"],
+  [2015,"Quiberon","Olympic triathlon","olympic","290/375","2h36'05"],
+  [2015,"Quidel","Half-Ironman (1.9/85/22.5)","half","161/302","5h19'19"],
+  [2014,"Sizun","Long-distance triathlon, duo (1.9/92/20)","half","143/146","6h47'02"],
+  [2014,"Wiesbaden 🇩🇪","Half-Ironman (1.9/90/21)","half","853/2109","5h45'05"],
+  [2014,"Quiberon","Olympic triathlon","olympic","59/370","2h15'17"],
+  [2014,"Cherbourg","Olympic triathlon","olympic","38/180","2h27'17"],
+  [2014,"Blavet","Sprint relay 3× (0.5/13/3)","sprint","14/136","2h15'41"],
+  [2014,"Locquirec","Sprint triathlon","sprint","52/243","1h23'46"],
+  [2012,"Hennebont","Olympic duathlon (5/30/5)","du","24/123","1h31'51"],
+  [2012,"Coëtquidan","Sprint triathlon (0.35/25/5)","sprint","14/137","1h08'06"],
+  [2012,"Quimperlé","Sprint triathlon","sprint","21/164","1h04'57"],
+  [2012,"Barcelona 🇪🇸","Half-Ironman (1.9/90/21)","half","208/1196","4h43'27"],
+  [2012,"Brest","Sprint triathlon","sprint","28/254","1h07'12"],
+  [2012,"Nice","Ironman (3.8/180/42)","im","DNF","—"],
+  [2012,"Plouescat","Sprint triathlon","sprint","48/290","1h07'32"],
+  [2012,"Larmor","Olympic triathlon","olympic","68/375","2h21'46"],
+  [2012,"Quiberon","Olympic triathlon","olympic","43/374","2h10'27"],
+  [2012,"Lorient","Sprint triathlon","sprint","47/190","1h16'31"],
+  [2012,"Pays d'Aix","Half-Ironman (1.9/90/21)","half","483/808","5h59'59"],
+  [2011,"Brest","5 km running test","run","—","17'40"],
+  [2011,"Toulon","400 m swimming test","run","—","5'41"],
+  [2011,"Hennebont","Olympic duathlon (5/30/5)","du","99/275","1h32'22"],
+  [2011,"Gourin","Long-distance duathlon","du","46/74","4h51'37"],
+  [2011,"Quimperlé","Sprint triathlon","sprint","6/114","—"],
+  [2011,"Brest","Sprint triathlon","sprint","31/251","1h08'40"],
+  [2011,"Quimper","Sprint triathlon","sprint","21/207","1h07'33"],
+  [2011,"Antwerp 🇧🇪","Half-Ironman (1.9/90/21)","half","364/1223","5h06'17"],
+  [2011,"Copenhagen 🇩🇰","Ironman (3.8/180/42)","im","548/1734","10h54'16"],
+  [2010,"Gourin","Sprint duathlon","du","28/142","1h47'04"],
+  [2010,"Rennes","Olympic triathlon","olympic","20/192","2h04'40"],
+  [2010,"Trégunc","Olympic triathlon","olympic","7/128","2h09'45"],
+  [2010,"Guerlédan","Olympic triathlon","olympic","DNF","—"],
+  [2010,"Larmor","Olympic triathlon","olympic","43/308","2h13'47"],
+  [2010,"Hennebont","Sprint triathlon","sprint","25/161","1h05'23"],
+  [2010,"Quiberon","Olympic triathlon","olympic","36/361","2h16'27"],
+  [2010,"Taulé – Morlaix","10 km run","run","369/3600","38'23"],
+  [2009,"Lannion","Sprint triathlon","sprint","45/143","1h19'44"],
+  [2009,"Sizun","Long-distance triathlon (1.9/88/20)","half","40/304","4h50'26"],
+  [2009,"Hennebont","Sprint triathlon","sprint","25/195","1h03'38"],
+  [2009,"Vineman 🇺🇸","Ironman (3.8/180/42)","im","DNF","—"],
+  [2009,"Quiberon","Olympic triathlon","olympic","116/313","2h20'32"],
+  [2009,"Brest","10 km run","run","101/1123","38'13"],
+  [2009,"Saint-Pol – Morlaix","Half marathon","run","295/2984","1h28'04"],
+  [2009,"La Rochelle","Marathon","run","386/1860","3h15'40"],
+  [2008,"Cesson","Sprint triathlon","sprint","45/237","1h07'29"],
+  [2008,"Rennes","Olympic triathlon","olympic","13/178","2h03'25"],
+  [2008,"Coëtquidan","Olympic triathlon","olympic","22/250","2h16'33"],
+  [2008,"Nice","Ironman (3.8/180/42)","im","999/1957","12h33'08"],
+  [2008,"Quimper","Sprint triathlon","sprint","43/178","1h16'59"],
+  [2008,"Plouescat","Sprint triathlon","sprint","29/253","1h10'43"],
+  [2008,"Larmor","Sprint triathlon","sprint","37/347","1h01'43"],
+  [2008,"Quiberon","Olympic triathlon","olympic","34/283","2h14'41"],
+  [2008,"Lorient","Olympic triathlon","olympic","20/207","2h06'40"],
+  [2008,"Roscoff","Long-distance triathlon","half","DNF","—"],
+  [2007,"Rennes","Olympic triathlon","olympic","48/184","2h18'17"],
+  [2007,"Plougonvelin","Sprint triathlon","sprint","26/182","1h09'48"],
+  [2007,"Larmor","Sprint triathlon","sprint","63/310","1h09"],
+  [2007,"Quiberon","Olympic triathlon","olympic","59/293","2h13'15"],
+  [2007,"La Rochelle","Marathon","run","682/1899","3h26'49"],
+  [2007,"Lorient","Long-distance triathlon (3/80/20)","half","53/206","4h46'04"],
+  [2007,"Brest","10 km run","run","74/866","38'30"],
+  [2006,"Saint-Gilles","Duathlon","du","87/101","1h40'22"],
+  [2006,"Paris","Marathon","run","11760/26879","4h06'33"],
+  [2006,"Quimper","Olympic triathlon","olympic","65/73","2h50'57"],
+  [2006,"Larmor","Sprint triathlon","sprint","101/137","1h12'19"],
+  [2006,"Quiberon","Olympic triathlon","olympic","195/264","2h36'21"],
+  [2005,"Bénodet","Sprint triathlon","sprint","DNF","—"],
+  [2005,"Commana","Triathlon","sprint","55/69","1h04'37"],
+  [2005,"Quimper","Olympic triathlon","olympic","106/134","3h01'33"],
+  [2005,"Plouescat","Sprint triathlon","sprint","161/251","1h18'17"],
+  [2005,"Lannion","Sprint triathlon","sprint","85/105","1h36'14"],
+  [2005,"Lorient","Sprint triathlon","sprint","DNF","—"],
+  [2005,"Saint-Gilles","Sprint duathlon","du","90/93","1h50'33"],
+  [2005,"Quiberon","Olympic triathlon","olympic","247/275","2h43'18"],
+  [2004,"Quiberon","Discovery triathlon (first race)","sprint","—","—"]
+];
+// Years with an injury break shown after their results
+var INJURY = { 2016: "Injury break between the 2015 and 2016 seasons", 2013: "Injury — no races this year" };
+
+var LABEL = { im:"Ironman", half:"Half / LD", olympic:"Olympic", sprint:"Sprint", du:"Duathlon", run:"Run / test" };
+
+function render(cat){
+  var box = document.getElementById('results');
+  var html = '';
+  var years = [];
+  RACES.forEach(function(r){ if (years.indexOf(r[0]) < 0) years.push(r[0]); });
+  [2013].forEach(function(y){ if (years.indexOf(y) < 0) years.push(y); });
+  years.sort(function(a,b){ return b-a; });
+
+  years.forEach(function(y){
+    var rows = RACES.filter(function(r){ return r[0]===y && (cat==='all' || r[3]===cat); });
+    var showInjury = INJURY[y] && cat === 'all';
+    if (!rows.length && !showInjury) return;
+    html += '<section class="sport-year"><h3 class="sport-y">' + y + '</h3>';
+    if (rows.length){
+      html += '<table class="sport-table"><thead><tr><th>Place</th><th>Race</th><th>Rank</th><th>Time</th></tr></thead><tbody>';
+      rows.forEach(function(r){
+        var dnf = r[4]==='DNF';
+        html += '<tr' + (r[3]==='im' ? ' class="is-im"' : '') + '>'
+          + '<td>' + r[1] + '</td>'
+          + '<td><span class="race-tag t-' + r[3] + '">' + LABEL[r[3]] + '</span>' + r[2] + '</td>'
+          + '<td class="mono' + (dnf ? ' dnf' : '') + '">' + r[4] + '</td>'
+          + '<td class="mono">' + r[5] + '</td></tr>';
+      });
+      html += '</tbody></table>';
+    }
+    if (showInjury) html += '<p class="injury">🩹 ' + INJURY[y] + '</p>';
+    html += '</section>';
+  });
+  box.innerHTML = html;
+}
+
+document.querySelectorAll('.sport-filters button').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.sport-filters button').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    render(btn.dataset.cat);
+  });
+});
+render('all');
+</script>
+<script src="assets/main.js"></script>
+</body>
+</html>

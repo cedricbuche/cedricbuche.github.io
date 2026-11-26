@@ -235,3 +235,38 @@ footer.page-foot{ margin-top:3rem; padding-top:1.4rem; border-top:1px solid var(
 
 }
 
+
+/* ---------- sport (extra) ---------- */
+.stat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin:1.6rem 0 .5rem; }
+@media (max-width:700px){ .stat-grid{ grid-template-columns:1fr 1fr; } }
+.stat{ border:1px solid var(--line); border-radius:var(--radius); padding:1rem 1.1rem; background:rgba(255,255,255,.4); }
+.stat-val{ display:block; font-family:var(--display); font-weight:700; font-size:1.7rem; color:var(--teal-deep); line-height:1.1; }
+.stat-lbl{ display:block; font-family:var(--mono); font-size:.7rem; color:var(--ink-soft); margin-top:.35rem; }
+
+.sport-filters{ display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 1.4rem; }
+.sport-filters button{
+  font-family:var(--mono); font-size:.75rem; padding:.4rem .8rem; border-radius:var(--radius);
+  border:1px solid var(--line); background:transparent; color:var(--ink-soft); cursor:pointer;
+}
+.sport-filters button.active{ background:var(--teal-deep); color:#fff; border-color:var(--teal-deep); }
+
+.sport-year{ margin-bottom:1.4rem; }
+.sport-y{ font-family:var(--mono); font-size:.95rem; color:var(--coral); border-bottom:1px solid var(--ink); padding-bottom:.3rem; margin:1.8rem 0 0; }
+.sport-table{ margin:0; }
+.sport-table th{ border-bottom:1px solid var(--line); }
+.sport-table td.mono{ font-family:var(--mono); font-size:.85rem; white-space:nowrap; }
+.sport-table td.dnf{ color:var(--coral); }
+.sport-table tr.is-im td{ background:rgba(217,142,43,.10); }
+.race-tag{
+  display:inline-block; font-family:var(--mono); font-size:.64rem; padding:.08rem .4rem; margin-right:.5rem;
+  border:1px solid var(--line); border-radius:2px; color:var(--ink-soft); vertical-align:1px;
+}
+.race-tag.t-im{ border-color:var(--amber); color:#8a5512; }
+.race-tag.t-half{ border-color:var(--teal); color:var(--teal-deep); }
+.injury{ font-family:var(--mono); font-size:.8rem; color:var(--ink-soft); margin:.8rem 0 0; }
+.sport-note{ font-size:.85rem; margin-top:2rem; }
+.sport-table{ table-layout:fixed; }
+.sport-table th:nth-child(1){ width:20%; }
+.sport-table th:nth-child(3){ width:15%; }
+.sport-table th:nth-child(4){ width:13%; }
+@media (max-width:700px){ .sport-table{ table-layout:auto; } }
